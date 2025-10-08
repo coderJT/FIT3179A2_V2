@@ -1,0 +1,182 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Hotel guest count information across states with occupancy rate for 2023 and 2024",
+  "width": "container",
+  "height": "container",
+  "background": "white",
+  "projection": {
+    "type": "mercator",
+    "scale": { "expr": "zoom" },
+    "center": { "expr": "[centerLon, centerLat]" }
+  },
+  "params": [
+    {
+      "name": "centerLon",
+      "value": 110,
+      "bind": {
+        "input": "range",
+        "min": 90,
+        "max": 130,
+        "step": 1,
+        "name": "Longitude: "
+      }
+    },
+    {
+      "name": "centerLat",
+      "value": 4,
+      "bind": {
+        "input": "range",
+        "min": -10,
+        "max": 10,
+        "step": 1,
+        "name": "Latitude: "
+      }
+    },
+    {
+      "name": "zoom",
+      "value": 2000,
+      "bind": {
+        "input": "range",
+        "min": 500,
+        "max": 5000,
+        "step": 100,
+        "name": "Zoom: "
+      }
+    },
+    {
+      "name": "ColorScheme",
+      "value": "reds",
+      "bind": {
+        "input": "select",
+        "options": ["reds", "blues", "greens"],
+        "labels": ["Reds", "Blues", "Greens"],
+        "name": "Color Scheme: "
+      }
+    },
+    {
+      "name": "SelectedYear",
+      "value": "TOTAL_2024",
+      "bind": {
+        "input": "select",
+        "options": ["TOTAL_2024", "TOTAL_2023"],
+        "labels": ["2024", "2023"],
+        "name": "Selected Year: "
+      }
+    },
+    {
+      "name": "GuestType",
+      "value": "TOTAL",
+      "bind": {
+        "input": "select",
+        "options": ["DOMESTIC", "FOREIGNER", "TOTAL"],
+        "labels": ["Domestic", "Foreigner", "Total"],
+        "name": "Guest Type: "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "../data/ne_10m_admin_1_states_provinces.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_10m_admin_1_states_provinces"
+        }
+      },
+      "transform": [{ "filter": "datum.properties.admin === 'Malaysia'" }],
+      "mark": { "type": "geoshape", "stroke": "#333", "fill": "#f5f5f5" }
+    },
+    {
+      "data": {
+        "url": "../data/ne_10m_admin_1_states_provinces.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_10m_admin_1_states_provinces"
+        }
+      },
+      "transform": [
+        {
+          "lookup": "properties.name",
+          "from": {
+            "data": { "url": "../data/hotel_guests.csv" },
+            "key": "REGION",
+            "fields": [
+              "TOTAL 2024",
+              "TOTAL 2023",
+              "DOMESTIC 2024",
+              "DOMESTIC 2023",
+              "FOREIGNER 2024",
+              "FOREIGNER 2023"
+            ]
+          }
+        },
+        {
+          "lookup": "properties.name",
+          "from": {
+            "data": { "url": "../data/hotel_occupancy_rate.csv" },
+            "key": "STATE",
+            "fields": ["2024(%)", "2023(%)", "DIFFERENCE"]
+          }
+        },
+        { "calculate": "toNumber(datum['TOTAL 2024'])", "as": "TOTAL_2024" },
+        { "calculate": "toNumber(datum['TOTAL 2023'])", "as": "TOTAL_2023" },
+        {
+          "calculate": "toNumber(datum['DOMESTIC 2024'])",
+          "as": "DOMESTIC_2024"
+        },
+        {
+          "calculate": "toNumber(datum['DOMESTIC 2023'])",
+          "as": "DOMESTIC_2023"
+        },
+        {
+          "calculate": "toNumber(datum['FOREIGNER 2024'])",
+          "as": "FOREIGNER_2024"
+        },
+        {
+          "calculate": "toNumber(datum['FOREIGNER 2023'])",
+          "as": "FOREIGNER_2023"
+        },
+        {
+          "calculate": "GuestType=='TOTAL' ? (SelectedYear=='TOTAL_2024' ? datum['TOTAL_2024'] : datum['TOTAL_2023']) : (GuestType=='DOMESTIC' ? (SelectedYear=='TOTAL_2024' ? datum['DOMESTIC_2024'] : datum['DOMESTIC_2023']) : (SelectedYear=='TOTAL_2024' ? datum['FOREIGNER_2024'] : datum['FOREIGNER_2023']))",
+          "as": "GUEST_SELECTED"
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "#333" },
+      "encoding": {
+        "color": {
+          "field": "GUEST_SELECTED",
+          "type": "quantitative",
+          "scale": { "scheme": { "expr": "ColorScheme" } },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "title": "Guest Count"
+          }
+        },
+        "tooltip": [
+          { "field": "properties.name", "type": "nominal", "title": "State" },
+          {
+            "field": "GUEST_SELECTED",
+            "type": "quantitative",
+            "title": "Guests Count"
+          },
+          {
+            "field": "2024(%)",
+            "type": "quantitative",
+            "title": "Occupancy Rate 2024 (%)"
+          },
+          {
+            "field": "2023(%)",
+            "type": "quantitative",
+            "title": "Occupancy Rate 2023 (%)"
+          },
+          {
+            "field": "DIFFERENCE",
+            "type": "quantitative",
+            "title": "Occupancy Rate Change (%)"
+          }
+        ]
+      }
+    }
+  ]
+}

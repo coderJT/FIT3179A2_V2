@@ -1,0 +1,77 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Dual-axis line chart: USD/MYR vs Tourist Arrivals with independent scales",
+  "width": "container",
+  "height": 400,
+  "layer": [
+    {
+      "data": { "url": "../data/exchange-rates.csv" },
+      "transform": [
+        {
+          "calculate": "datetime(year(datum.DATE), month(datum.DATE), 1)",
+          "as": "YearMonth"
+        },
+        {
+          "aggregate": [{ "op": "average", "field": "USD", "as": "Avg_USD" }],
+          "groupby": ["YearMonth"]
+        }
+      ],
+      "mark": { "type": "line", "color": "blue", "point": true },
+      "encoding": {
+        "x": {
+          "field": "YearMonth",
+          "type": "temporal",
+          "title": "Month",
+          "timeUnit": "yearmonth",
+          "axis": {
+            "format": "%b %Y",
+            "labelAngle": -40,
+            "labelAlign": "right"
+          }
+        },
+        "y": {
+          "field": "Avg_USD",
+          "type": "quantitative",
+          "axis": { "title": "USD/MYR", "titleColor": "blue", "orient": "left" }
+        },
+        "tooltip": [
+          {
+            "field": "YearMonth",
+            "type": "temporal",
+            "title": "Month",
+            "format": "%B %Y"
+          },
+          {
+            "field": "Avg_USD",
+            "type": "quantitative",
+            "title": "USD/MYR",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "data": { "url": "../data/monthly_visitors.csv" },
+      "transform": [
+        {
+          "calculate": "datetime(datum.Year, indexof(['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'], datum.MONTH), 1)",
+          "as": "YearMonth"
+        }
+      ],
+      "mark": { "type": "line", "color": "orange", "point": true },
+      "encoding": {
+        "x": { "field": "YearMonth", "type": "temporal" },
+        "y": {
+          "field": "Arrivals",
+          "type": "quantitative",
+          "axis": {
+            "title": "Tourist Arrivals",
+            "titleColor": "orange",
+            "orient": "right"
+          }
+        }
+      }
+    }
+  ],
+  "resolve": { "scale": { "y": "independent" } }
+}

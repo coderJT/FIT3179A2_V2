@@ -1,0 +1,66 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f0f0f0",
+  "width": "container",
+  "height": "container",
+  "title": "Top 20 Countries Contributing to Malaysia's Tourist Receipts (2024 vs 2023)",
+  "data": {
+    "url": "../data/top_20_visitor_receipts.csv"
+  },
+  "transform": [
+    {
+      "fold": ["2024", "2023"],
+      "as": ["Year", "Receipts"]
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "cornerRadiusTopLeft": 3,
+    "cornerRadiusTopRight": 3
+  },
+  "encoding": {
+    "y": {
+      "field": "COUNTRY OF NATIONALITY",
+      "type": "ordinal",
+      "sort": "-x",
+      "title": "Country",
+      "axis": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "x": {
+      "field": "Receipts",
+      "type": "quantitative",
+      "title": "Tourist Receipts (RM million)",
+      "axis": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "color": {
+      "field": "Year",
+      "type": "nominal",
+      "title": "Year",
+      "scale": {
+        "domain": ["2023", "2024"],
+        "range": ["#A6CEE3", "#1F78B4"]
+      },
+      "legend": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "tooltip": [
+      { "field": "COUNTRY OF NATIONALITY", "type": "ordinal", "title": "Country" },
+      { "field": "Year", "type": "nominal", "title": "Year" },
+      { "field": "Receipts", "type": "quantitative", "format": ",.2f", "title": "Receipts (RM million)" }
+    ],
+    "xOffset": { "field": "Year" }
+  },
+  "config": {
+    "view": { "stroke": "transparent" },
+    "axis": { "grid": false },
+    "mark": { "tooltip": true }
+  }
+}

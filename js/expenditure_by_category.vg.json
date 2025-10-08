@@ -1,0 +1,74 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f0f0f0",
+  "width": "container",
+  "height": "container",
+  "title": "Foreign Tourist Expenditure in Malaysia by Category (2024 vs 2023)",
+  "data": {
+    "url": "../data/visitor_expenditure.csv"
+  },
+  "transform": [
+    {
+      "fold": ["VALUE 2024", "VALUE 2023"],
+      "as": ["Year", "Value"]
+    },
+    {
+      "calculate": "substring(datum.Year, 6)",
+      "as": "YearLabel"
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "cornerRadiusTopLeft": 3,
+    "cornerRadiusTopRight": 3
+  },
+  "encoding": {
+    "x": {
+      "field": "ITEMS",
+      "type": "ordinal",
+      "title": "Expenditure Category",
+      "sort": "-y",
+      "axis": {
+        "labelAngle": -30,
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "y": {
+      "field": "Value",
+      "type": "quantitative",
+      "title": "Expenditure (RM million)",
+      "axis": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "color": {
+      "field": "YearLabel",
+      "type": "nominal",
+      "title": "Year",
+      "scale": {
+        "domain": ["2023", "2024"],
+        "range": ["#A6CEE3", "#1F78B4"]
+      },
+      "legend": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "tooltip": [
+      { "field": "ITEMS", "type": "ordinal", "title": "Category" },
+      { "field": "YearLabel", "type": "nominal", "title": "Year" },
+      { "field": "Value", "type": "quantitative", "format": ",.2f", "title": "Expenditure (RM million)" },
+      { "field": "%GROWTH", "type": "quantitative", "title": "% Growth" },
+      { "field": "SHARE 2024", "type": "quantitative", "title": "2024 Share (%)" },
+      { "field": "SHARE 2023", "type": "quantitative", "title": "2023 Share (%)" }
+    ],
+    "xOffset": { "field": "YearLabel" }
+  },
+  "config": {
+    "view": { "stroke": "transparent" },
+    "axis": { "grid": false },
+    "mark": { "tooltip": true }
+  }
+}

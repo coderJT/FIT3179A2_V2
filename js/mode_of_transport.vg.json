@@ -1,0 +1,44 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f0f0f0",
+  "width": 400,
+  "height": 400,
+  "data": {
+    "url": "../data/mode_of_transport.csv"
+  },
+  "title": "Tourist Arrivals by Mode of Transport (2024)",
+  "transform": [
+    { "filter": "datum.MODE_OF_TRANSPORT != 'TOTAL'" }
+  ],
+  "mark": { "type": "arc", "outerRadius": 150 },
+  "encoding": {
+    "theta": {
+      "field": "2024",
+      "type": "quantitative",
+      "title": "Total Arrivals"
+    },
+    "color": {
+      "field": "MODE OF TRANSPORT",
+      "type": "nominal",
+      "title": "Mode of Transport",
+      "scale": { "scheme": "tableau20" },
+      "legend": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "tooltip": [
+      { "field": "MODE OF TRANSPORT", "type": "nominal", "title": "Mode" },
+      { "field": "2024", "type": "quantitative", "title": "Arrivals (2024)" },
+      { "field": "% SHARE 2024", "type": "quantitative", "title": "Share (%)" }
+    ]
+  },
+  "view": { "stroke": null },
+  "config": {
+    "title": {
+      "anchor": "start",
+      "fontSize": 16,
+      "color": "#333333"
+    }
+  }
+}

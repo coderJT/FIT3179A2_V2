@@ -1,0 +1,77 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f0f0f0",
+  "width": "container",
+  "height": "container",
+  "data": {
+    "url": "../data/monthly_visitors.csv"
+  },
+  "title": "Visitor trend",
+  "params": [
+    {
+      "name": "selectedOption",
+      "value": "Both"
+    }
+  ],
+  "transform": [
+    {
+      "filter": "(selectedOption == 'Both' || datum.Year == selectedOption)"
+    }
+  ],
+  "mark": { "type": "line", "strokeWidth": 5 },
+  "encoding": {
+    "x": {
+      "field": "MONTH",
+      "type": "ordinal",
+      "title": "Month",
+      "sort": [
+        "JANUARY",
+        "FEBRUARY",
+        "MARCH",
+        "APRIL",
+        "MAY",
+        "JUNE",
+        "JULY",
+        "AUGUST",
+        "SEPTEMBER",
+        "OCTOBER",
+        "NOVEMBER",
+        "DECEMBER"
+      ],
+      "axis": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "y": {
+      "field": "Arrivals",
+      "type": "quantitative",
+      "stack": null,
+      "title": "Total Arrivals",
+      "axis": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "color": {
+      "field": "Year",
+      "type": "nominal",
+      "title": "Year",
+      "scale": {
+        "scheme": "tableau20"
+      },
+      "legend": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "tooltip": [
+      { "field": "MONTH", "type": "ordinal" },
+      { "field": "Year", "type": "nominal" },
+      { "field": "Arrivals", "type": "quantitative" }
+    ]
+  },
+  "config": {
+    "view": { "stroke": "transparent" }
+  }
+}

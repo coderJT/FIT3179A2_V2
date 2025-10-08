@@ -1,0 +1,82 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f0f0f0",
+  "width": "container",
+  "height": "container",
+  "title": "% Growth in Visitor Arrivals (2024 vs 2023)",
+  "data": {
+    "values": [
+      { "MONTH": "JANUARY", "GROWTH": 16.7 },
+      { "MONTH": "FEBRUARY", "GROWTH": 41.6 },
+      { "MONTH": "MARCH", "GROWTH": 40.6 },
+      { "MONTH": "APRIL", "GROWTH": 29.0 },
+      { "MONTH": "MAY", "GROWTH": 33.2 },
+      { "MONTH": "JUNE", "GROWTH": 49.2 },
+      { "MONTH": "JULY", "GROWTH": 31.9 },
+      { "MONTH": "AUGUST", "GROWTH": 42.1 },
+      { "MONTH": "SEPTEMBER", "GROWTH": 19.2 },
+      { "MONTH": "OCTOBER", "GROWTH": 30.9 },
+      { "MONTH": "NOVEMBER", "GROWTH": 18.4 },
+      { "MONTH": "DECEMBER", "GROWTH": 24.4 }
+    ]
+  },
+  "mark": {
+    "type": "bar",
+    "cornerRadiusTopLeft": 5,
+    "cornerRadiusTopRight": 5
+  },
+  "encoding": {
+    "x": {
+      "field": "MONTH",
+      "type": "ordinal",
+      "title": "Month",
+      "sort": [
+        "JANUARY",
+        "FEBRUARY",
+        "MARCH",
+        "APRIL",
+        "MAY",
+        "JUNE",
+        "JULY",
+        "AUGUST",
+        "SEPTEMBER",
+        "OCTOBER",
+        "NOVEMBER",
+        "DECEMBER"
+      ],
+      "axis": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "y": {
+      "field": "GROWTH",
+      "type": "quantitative",
+      "title": "% Growth",
+      "axis": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "color": {
+      "field": "GROWTH",
+      "type": "quantitative",
+      "title": "% Growth",
+      "scale": {
+        "scheme": "blues"
+      },
+      "legend": {
+        "labelColor": "#555555",
+        "titleColor": "#555555"
+      }
+    },
+    "tooltip": [
+      { "field": "MONTH", "type": "ordinal" },
+      { "field": "GROWTH", "type": "quantitative", "title": "% Growth" }
+    ]
+  },
+  "config": {
+    "view": { "stroke": "transparent" },
+    "mark": { "tooltip": true }
+  }
+}

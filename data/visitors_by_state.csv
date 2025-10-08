@@ -1,0 +1,17 @@
+STATE,TOTAL_VISITORS,TOP5_COUNTRIES,LON,LAT,LON_SHIFTED,LAT_SHIFTED
+Johor,37.6,"Thailand (67.1); Singapore (65.6); Others Asean (30.1); Indonesia (25.7)",103.5,1.8,103.5,1.8 
+Kedah,38.6,"Finland (71.7); Singapore (70.9); Saudi Arabia (62.4); Belgium (53.3); Thailand (53.3)",100.6,6.1,100.6,6.1 
+Kuala Lumpur,34.2,"Others South Asia (98.1); Saudi Arabia (98.1); United Arab Emirates (97.0); Others West Asia (96.8); Pakistan (95.3)",101.7,3.1,101.7,3.1 
+Selangor,15.8,"Oman (67.1); Others West Asia (60.4); Central Asia (56.6); Kuwait (55.9); United Arab Emirates (55.4)",101.5,3.3,101.5,3.3 
+Melaka,15.7,"Vietnam (68.6); Others Asean (33.1); Taiwan (29.1); Indonesia (26.8); Thailand (17.6)",102.2,2.2,102.2,2.2 
+Pahang,11.5,"Oman (60.5); Vietnam (56.6); United Arab Emirates (49.5); Kuwait (45.8); Pakistan (45.1)",102.5,3.8,102.5,3.8 
+Pulau Pinang,10.0,"Saudi Arabia (42.2); United States (30.7); Netherlands (26.6); United Arab Emirates (23.8); Germany (23.4)",100.3,5.4,100.3,5.4 
+Sabah,6.4,"China (47.3); Taiwan (28.3); South Korea (17.3); Philippines (13.1); Canada (11.4)",116.0,5.5,106.0,2.5 
+Sarawak,5.3,"Brunei (90.4); Finland (7.4); Australia (7.2); Central Asia (7.2); Taiwan (6.0)",112.5,2.5,102.5,-0.5 
+Perlis,4.9,"Thailand (62.2); Oman (0.8); New Zealand (0.4); Russia (0.3)",100.2,6.6,100.2,6.6 
+Putrajaya,1.8,"United Kingdom (13.6); Vietnam (13.4); United States (9.9); Others Americas (8.6); Others West Asia (8.4)",101.7,2.9,101.7,2.9 
+Negeri Sembilan,1.7,"India (20.8); Others Asean (4.0); Singapore (2.3); Netherlands (2.3); Kuwait (2.0)",102.2,2.7,102.2,2.7 
+Perak,1.2,"Spain (10.9); Oman (10.5); Netherlands (7.1); Germany (6.2); France (6.0)",101.0,4.8,101.0,4.8 
+Labuan,0.8,"Brunei (18.0); Italy (1.1); Philippines (0.2); United Arab Emirates (0.1)",115.2,5.3,105.2,2.3 
+Terengganu,0.5,"Norway (22.9); Italy (14.9); Spain (13.1); Finland (10.5); France (7.6)",103.1,5.3,103.1,5.3 
+Kelantan,0.2,"Finland (5.3); Others South Asia (3.9); Spain (3.8); Italy (1.6); Germany (0.5)",102.2,6.0,102.2,6.0
