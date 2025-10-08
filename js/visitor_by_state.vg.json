@@ -27,7 +27,7 @@
   "layer": [
     {
       "data": {
-        "url": "../data/ne_10m_admin_1_states_provinces.topojson",
+        "url": "./data/ne_10m_admin_1_states_provinces.topojson",
         "format": {
           "type": "topojson",
           "feature": "ne_10m_admin_1_states_provinces"
@@ -38,7 +38,7 @@
     },
     {
       "data": {
-        "url": "../data/ne_10m_admin_1_states_provinces.topojson",
+        "url": "./data/ne_10m_admin_1_states_provinces.topojson",
         "format": {
           "type": "topojson",
           "feature": "ne_10m_admin_1_states_provinces"
@@ -49,7 +49,7 @@
         {
           "lookup": "properties.name",
           "from": {
-            "data": { "url": "../data/visitors_by_state.csv" },
+            "data": { "url": "./data/visitors_by_state.csv" },
             "key": "STATE",
             "fields": ["TOTAL_VISITORS", "TOP5_COUNTRIES"]
           }
@@ -86,7 +86,7 @@
       }
     },
     {
-      "data": { "url": "../data/visitors_by_state.csv" },
+      "data": { "url": "./data/visitors_by_state.csv" },
       "mark": {
         "type": "rect",
         "width": 35,
@@ -100,7 +100,7 @@
       }
     },
     {
-      "data": { "url": "../data/visitors_by_state.csv" },
+      "data": { "url": "./data/visitors_by_state.csv" },
       "mark": {
         "type": "text",
         "color": "white",

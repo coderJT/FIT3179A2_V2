@@ -5,7 +5,7 @@
   "height": "container",
   "title": "Top 20 Countries Contributing to Malaysia's Tourist Receipts (2024 vs 2023)",
   "data": {
-    "url": "../data/top_20_visitor_receipts.csv"
+    "url": "./data/top_20_visitor_receipts.csv"
   },
   "transform": [
     {

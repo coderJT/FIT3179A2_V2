@@ -77,7 +77,7 @@
   "layer": [
     {
       "data": {
-        "url": "../data/ne_10m_admin_1_states_provinces.topojson",
+        "url": "./data/ne_10m_admin_1_states_provinces.topojson",
         "format": {
           "type": "topojson",
           "feature": "ne_10m_admin_1_states_provinces"
@@ -88,7 +88,7 @@
     },
     {
       "data": {
-        "url": "../data/ne_10m_admin_1_states_provinces.topojson",
+        "url": "./data/ne_10m_admin_1_states_provinces.topojson",
         "format": {
           "type": "topojson",
           "feature": "ne_10m_admin_1_states_provinces"
@@ -98,7 +98,7 @@
         {
           "lookup": "properties.name",
           "from": {
-            "data": { "url": "../data/hotel_guests.csv" },
+            "data": { "url": "./data/hotel_guests.csv" },
             "key": "REGION",
             "fields": [
               "TOTAL 2024",
@@ -113,7 +113,7 @@
         {
           "lookup": "properties.name",
           "from": {
-            "data": { "url": "../data/hotel_occupancy_rate.csv" },
+            "data": { "url": "./data/hotel_occupancy_rate.csv" },
             "key": "STATE",
             "fields": ["2024(%)", "2023(%)", "DIFFERENCE"]
           }

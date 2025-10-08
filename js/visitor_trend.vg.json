@@ -4,7 +4,7 @@
   "width": "container",
   "height": "container",
   "data": {
-    "url": "../data/monthly_visitors.csv"
+    "url": "./data/monthly_visitors.csv"
   },
   "title": "Visitor trend",
   "params": [

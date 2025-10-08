@@ -5,7 +5,7 @@
   "height": "container",
   "title": "Foreign Tourist Expenditure in Malaysia by Category (2024 vs 2023)",
   "data": {
-    "url": "../data/visitor_expenditure.csv"
+    "url": "./data/visitor_expenditure.csv"
   },
   "transform": [
     {

@@ -5,7 +5,7 @@
   "height": 400,
   "layer": [
     {
-      "data": { "url": "../data/exchange-rates.csv" },
+      "data": { "url": "./data/exchange-rates.csv" },
       "transform": [
         {
           "calculate": "datetime(year(datum.DATE), month(datum.DATE), 1)",
@@ -51,7 +51,7 @@
       }
     },
     {
-      "data": { "url": "../data/monthly_visitors.csv" },
+      "data": { "url": "./data/monthly_visitors.csv" },
       "transform": [
         {
           "calculate": "datetime(datum.Year, indexof(['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'], datum.MONTH), 1)",

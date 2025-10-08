@@ -4,7 +4,7 @@
   "width": 400,
   "height": 400,
   "data": {
-    "url": "../data/mode_of_transport.csv"
+    "url": "./data/mode_of_transport.csv"
   },
   "title": "Tourist Arrivals by Mode of Transport (2024)",
   "transform": [

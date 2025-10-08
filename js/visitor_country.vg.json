@@ -42,7 +42,7 @@
       "mark": {"type": "geoshape", "fill": null, "stroke": "#ddd"}
     },
     {
-      "data": {"url": "../data/country_info.csv", "format": {"type": "csv"}},
+      "data": {"url": "./data/country_info.csv", "format": {"type": "csv"}},
       "transform": [{"filter": "datum.name === 'Malaysia'"}],
       "mark": {
         "type": "circle",
@@ -60,14 +60,14 @@
     },
     {
       "data": {
-        "url": "../data/top_20_countries_arrivals.csv",
+        "url": "./data/top_20_countries_arrivals.csv",
         "format": {"type": "csv"}
       },
       "transform": [
         {
           "lookup": "COUNTRY OF NATIONALITY",
           "from": {
-            "data": {"url": "../data/country_info.csv", "format": {"type": "csv"}},
+            "data": {"url": "./data/country_info.csv", "format": {"type": "csv"}},
             "key": "name",
             "fields": ["latitude", "longitude"]
           }
