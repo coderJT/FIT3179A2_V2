@@ -342,48 +342,63 @@
         https://www.bnm.gov.my/exchange-rates
       </p>
     </footer>
-    <!-- Vega-Lite script integrations -->
+
     <script type="text/javascript">
-      var spec1 = "js/hotel_info.vg.json";
-      vegaEmbed("#hotel_info", spec1)
-        .then(function (result) {})
-        .catch(console.error);
-      var spec2 = "js/visitor_country.vg.json";
-      vegaEmbed("#visitor_country", spec2)
-        .then(function (result) {})
-        .catch(console.error);
-      var spec3 = "js/mode_of_transport.vg.json";
-      vegaEmbed("#mode_of_transport", spec3)
-        .then(function (result) {})
-        .catch(console.error);
-      var spec4 = "js/expenditure_by_category.vg.json";
-      vegaEmbed("#expenditure_by_category", spec4)
-        .then(function (result) {})
-        .catch(console.error);
-      var spec5 = "js/receipts_comparison.vg.json";
-      vegaEmbed("#receipts_comparison", spec5)
-        .then(function (result) {})
-        .catch(console.error);
-      var spec6 = "js/point_of_entries.vg.json";
-      vegaEmbed("#point_of_entries", spec6)
-        .then(function (result) {})
-        .catch(console.error);
-      var spec7 = "js/visitor_trend.vg.json";
-      vegaEmbed("#visitor_trend", spec7)
-        .then(function (result) {})
-        .catch(console.error);
-      var spec8 = "js/visitor_by_state.vg.json";
-      vegaEmbed("#visitor_by_state", spec8)
-        .then(function (result) {})
-        .catch(console.error);
-      var spec9 = "js/visitor_rate.vg.json";
-      vegaEmbed("#visitor_rate", spec9)
-        .then(function (result) {})
-        .catch(console.error);
-      var spec10 = "js/foreign_exchange_and_arrivals.vg.json";
-      vegaEmbed("#foreign_exchange_and_arrivals", spec10)
-        .then(function (result) {})
-        .catch(console.error);
+      function showLoadingMessage(id) {
+        const container = document.querySelector(id);
+        if (container) {
+          const loading = document.createElement("div");
+          loading.className = "loading";
+          loading.textContent = "Loading chart...";
+          loading.style.textAlign = "center";
+          loading.style.color = "#666";
+          loading.style.padding = "40px 0";
+          loading.style.fontFamily = "Open Sans, sans-serif";
+          container.appendChild(loading);
+        }
+      }
+
+      function hideLoadingMessage(id) {
+        const container = document.querySelector(id);
+        if (container) {
+          const loading = container.querySelector(".loading");
+          if (loading) loading.remove();
+        }
+      }
+
+      const charts = [
+        { id: "#hotel_info", spec: "js/hotel_info.vg.json" },
+        { id: "#visitor_country", spec: "js/visitor_country.vg.json" },
+        { id: "#mode_of_transport", spec: "js/mode_of_transport.vg.json" },
+        {
+          id: "#expenditure_by_category",
+          spec: "js/expenditure_by_category.vg.json",
+        },
+        { id: "#receipts_comparison", spec: "js/receipts_comparison.vg.json" },
+        { id: "#point_of_entries", spec: "js/point_of_entries.vg.json" },
+        { id: "#visitor_trend", spec: "js/visitor_trend.vg.json" },
+        { id: "#visitor_by_state", spec: "js/visitor_by_state.vg.json" },
+        { id: "#visitor_rate", spec: "js/visitor_rate.vg.json" },
+        {
+          id: "#foreign_exchange_and_arrivals",
+          spec: "js/foreign_exchange_and_arrivals.vg.json",
+        },
+      ];
+
+      async function loadChartsSequentially() {
+        for (const chart of charts) {
+          showLoadingMessage(chart.id);
+          try {
+            await vegaEmbed(chart.id, chart.spec, { actions: false });
+          } catch (err) {
+            console.error(`Error loading ${chart.spec}:`, err);
+          } finally {
+            hideLoadingMessage(chart.id);
+          }
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", loadChartsSequentially);
     </script>
   </body>
 </html>
