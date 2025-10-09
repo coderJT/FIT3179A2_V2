@@ -1,0 +1,23 @@
+[
+  {"id": "Tourist Expenditure", "parent": "", "value": ""},
+  {"id": "Basic Needs", "parent": "Tourist Expenditure", "value": ""},
+  {"id": "Leisure", "parent": "Tourist Expenditure", "value": ""},
+  {"id": "Travel", "parent": "Tourist Expenditure", "value": ""},
+  {"id": "Others", "parent": "Tourist Expenditure", "value": ""},
+
+  {"id": "Accommodation", "parent": "Basic Needs", "value": 19322.20},
+  {"id": "Food & Beverages", "parent": "Basic Needs", "value": 17188.92},
+  {"id": "Local Transportation", "parent": "Basic Needs", "value": 6079.64},
+
+  {"id": "Shopping", "parent": "Leisure", "value": 39895.38},
+  {"id": "Entertainment", "parent": "Leisure", "value": 2316.73},
+  {"id": "Sports", "parent": "Leisure", "value": 154.89},
+
+  {"id": "International Airfares", "parent": "Travel", "value": 8689.88},
+  {"id": "Domestic Airfares", "parent": "Travel", "value": 2555.85},
+
+  {"id": "Medical", "parent": "Others", "value": 5055.84},
+  {"id": "Organised Tour", "parent": "Others", "value": 4089.35},
+  {"id": "Fuel", "parent": "Others", "value": 1113.50},
+  {"id": "Other Expenses", "parent": "Others", "value": 320.92}
+]

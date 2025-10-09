@@ -45,7 +45,7 @@ h3 {
   height: auto;
 }
 .container-sidebar {
-  width: 100%;
+  width: 100vw;
   min-height: 80vh;
   display: flex;
   align-items: center;
@@ -53,8 +53,8 @@ h3 {
   gap: 2em;
 }
 .container-sidebar-column {
-  width: 100%;
-  min-height: 80vh;
+  width: 100vw;
+  min-height: 100vh;
   height: auto;
   display: flex;
   align-items: center;
