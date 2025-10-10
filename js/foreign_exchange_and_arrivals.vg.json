@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Dual-axis line chart: USD/MYR vs Tourist Arrivals with independent scales",
-  "width": "container",
+  "width": 400,
   "height": 400,
   "layer": [
     {

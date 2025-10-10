@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Hotel guest count information across states with occupancy rate for 2023 and 2024",
   "width": "container",
-  "height": "container",
+  "height": "500",
   "background": "white",
   "projection": {
     "type": "mercator",
@@ -12,29 +12,15 @@
   "params": [
     {
       "name": "centerLon",
-      "value": 110,
-      "bind": {
-        "input": "range",
-        "min": 90,
-        "max": 130,
-        "step": 1,
-        "name": "Longitude: "
-      }
+      "value": 109.5
     },
     {
       "name": "centerLat",
-      "value": 4,
-      "bind": {
-        "input": "range",
-        "min": -10,
-        "max": 10,
-        "step": 1,
-        "name": "Latitude: "
-      }
+      "value": 4
     },
     {
       "name": "zoom",
-      "value": 2000,
+      "value": 3500,
       "bind": {
         "input": "range",
         "min": 500,
@@ -77,14 +63,10 @@
   "layer": [
     {
       "data": {
-        "url": "./data/ne_10m_admin_1_states_provinces.topojson",
-        "format": {
-          "type": "topojson",
-          "feature": "ne_10m_admin_1_states_provinces"
-        }
+        "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/7_others/oceans.topojson",
+        "format": {"type": "topojson", "feature": "oceans"}
       },
-      "transform": [{ "filter": "datum.properties.admin === 'Malaysia'" }],
-      "mark": { "type": "geoshape", "stroke": "#333", "fill": "#f5f5f5" }
+      "mark": {"type": "geoshape", "fill": "#cce7ff"}
     },
     {
       "data": {
@@ -148,7 +130,7 @@
           "type": "quantitative",
           "scale": { "scheme": { "expr": "ColorScheme" } },
           "legend": {
-            "orient": "bottom",
+            "orient": "bottom-right",
             "direction": "horizontal",
             "title": "Guest Count"
           }
@@ -177,6 +159,13 @@
           }
         ]
       }
+    },
+      {
+      "data": {
+        "url": "./data/ne_10m_graticules_5.topojson",
+        "format": {"type": "topojson", "feature": "ne_10m_graticules_5"}
+      },
+      "mark": {"type": "geoshape", "fill": null, "stroke": "#ddd"}
     }
   ]
 }

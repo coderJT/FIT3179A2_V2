@@ -1,104 +1,86 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": "container",
-  "height": "container",
-  "projection": {
-    "type": "naturalEarth1",
-    "center": {
-      "expr": "RegionSelect=='West Malaysia' ? [102, 4] : (RegionSelect=='East Malaysia' ? [114, 4] : [109, 4])"
-    },
-    "scale": {
-      "expr": "RegionSelect=='Both' ? 4000 : (RegionSelect=='West Malaysia' ? 5500 : 4800)"
-    }
+  "title": "Sum of Arrivals within Timeframe",
+  "data": {
+    "url": "./data/arrivals_by_state_date.csv",
+    "format": { "type": "csv" }
   },
-  "params": [
+  "vconcat": [
     {
-      "name": "RegionSelect",
-      "value": "Both",
-      "bind": {
-        "input": "select",
-        "options": ["West Malaysia", "East Malaysia", "Both"],
-        "labels": ["West Malaysia", "East Malaysia", "Both"],
-        "name": "Region: "
-      }
-    },
-    {
-      "name": "ColorScheme",
-      "value": "greens",
-      "bind": {
-        "input": "select",
-        "options": ["reds", "blues", "greens", "oranges"],
-        "labels": ["Reds", "Blues", "Greens", "Orange"],
-        "name": "Color Scheme: "
-      }
-    }
-  ],
-  "layer": [
-    {
-      "data": {
-        "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/7_others/oceans.topojson",
-        "format": { "type": "topojson", "feature": "oceans" }
-      },
-      "mark": { "type": "geoshape", "fill": "skyblue" }
-    },
-    {
-      "data": {
-        "url": "./data/ne_10m_admin_1_states_provinces.topojson",
-        "format": {
-          "type": "topojson",
-          "feature": "ne_10m_admin_1_states_provinces"
-        }
-      },
-      "transform": [{ "filter": "datum.properties.admin === 'Malaysia'" }],
-      "mark": { "type": "geoshape", "stroke": "white", "fill": "#AEDFF7" }
-    },
-    {
-      "data": {
-        "url": "./data/ne_10m_graticules_5.topojson",
-        "format": { "type": "topojson", "feature": "ne_10m_graticules_5" }
-      },
-      "mark": { "type": "geoshape", "fill": null, "stroke": "#ddd" }
-    },
-    {
-      "data": { "url": "./data/points_of_entry.csv" },
-      "transform": [
-        {
-          "filter": "RegionSelect=='Both' || (RegionSelect=='West Malaysia' && datum.REGION=='West') || (RegionSelect=='East Malaysia' && datum.REGION=='East')"
-        }
-      ],
-      "mark": {
-        "type": "circle",
-        "tooltip": true,
-        "stroke": "#333",
-        "strokeWidth": 0.5,
-        "size": 250
-      },
+      "width": 1000,
+      "height": 300,
+      "mark": "bar",
       "encoding": {
-        "longitude": { "field": "LONGITUDE", "type": "quantitative" },
-        "latitude": { "field": "LATITUDE", "type": "quantitative" },
-        "color": {
-          "field": "VISITOR ARRIVAL COUNT",
+        "x": {
+          "field": "soe",
+          "type": "nominal",
+          "title": "States in Malaysia"
+        },
+        "y": {
+          "field": "total_arrivals",
           "type": "quantitative",
-          "scale": {
-            "scheme": { "expr": "ColorScheme" },
-            "domain": [500000, 15000000]
-          },
-          "legend": { "orient": "bottom", "direction": "horizontal" }
+          "title": "Entry counts per State"
         },
         "tooltip": [
+          { "field": "soe", "type": "nominal", "title": "State" },
           {
-            "field": "POINT OF ENTRY",
-            "type": "nominal",
-            "title": "Entry Point"
-          },
-          {
-            "field": "VISITOR ARRIVAL COUNT",
+            "field": "total_arrivals",
             "type": "quantitative",
-            "title": "Visitors"
-          },
-          { "field": "STATE", "type": "nominal", "title": "State" }
+            "title": "Total arrivals"
+          }
         ]
-      }
+      },
+      "transform": [
+        {
+          "filter": {
+            "param": "brush"
+          }
+        },
+        {
+          "aggregate": [
+            { "op": "sum", "field": "total_arrivals", "as": "total_arrivals" }
+          ],
+          "groupby": ["soe"]
+        }
+      ]
+    },
+    {
+      "width": 1000,
+      "height": 100,
+      "mark": "line",
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "timeUnit": "yearmonthdate",
+          "title": "Date",
+          "axis": { "tickCount": "day", "format": "%d %b %Y" }
+        },
+        "y": {
+          "field": "total_arrivals",
+          "type": "quantitative",
+          "title": "Total arrival count (Day)"
+        }
+      },
+      "transform": [
+        {
+          "aggregate": [
+            { "op": "sum", "field": "total_arrivals", "as": "total_arrivals" }
+          ],
+          "groupby": ["date"]
+        }
+      ],
+      "params": [
+        {
+          "name": "brush",
+          "select": {
+            "type": "interval",
+            "encodings": ["x"],
+            "translate": true,
+            "zoom": true
+          }
+        }
+      ]
     }
   ]
 }

@@ -1,12 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "background": "#f0f0f0",
-  "width": 400,
-  "height": 400,
+  "width": "300",
+  "height": "400",
   "data": {
     "url": "./data/mode_of_transport.csv"
   },
-  "title": "Tourist Arrivals by Mode of Transport (2024)",
   "transform": [
     { "filter": "datum.MODE_OF_TRANSPORT != 'TOTAL'" }
   ],

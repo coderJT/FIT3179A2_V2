@@ -3,10 +3,10 @@
   "background": "#f0f0f0",
   "title": "",
   "width": "container",
-  "height": "container",
+  "height": "600",
   "projection": {
     "type": "naturalEarth1",
-    "scale": 200
+    "scale": 300
   },
    "params": [
     {
@@ -88,7 +88,7 @@
           "field": "growth",
           "type": "quantitative",
           "scale": {"range": [100, 1000], "domain": [1, 100]},
-          "legend": {"title": "Percentage Growth (%)", "orient": "right"}
+          "legend": {"title": "Percentage Growth (%)", "orient": "top-left"}
         },
         "color": {
           "field": "visitors",
@@ -99,7 +99,7 @@
             "reverse": true
           },
           "legend": {
-            "orient": "right",
+            "orient": "bottom-left",
             "title": "Number of visitors (Millions)",
             "format": "~s"
           }

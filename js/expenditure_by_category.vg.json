@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v6.json",
   "description": "Treemap of Tourist Expenditure in Malaysia by Category (2024)",
-  "width": 960,
-  "height": 500,
+  "width": 1000,
+  "height": 400,
   "padding": 2.5,
   "autosize": "none",
 
@@ -12,13 +12,14 @@
       "value": "squarify",
       "bind": {
         "input": "select",
-        "options": ["squarify", "binary", "slicedice"]
+        "options": ["squarify", "binary", "slicedice"],
+        "name": "Layout type: "
       }
     },
     {
       "name": "aspectRatio",
       "value": 1.6,
-      "bind": { "input": "range", "min": 1, "max": 5, "step": 0.1 }
+      "bind": { "input": "range", "min": 1, "max": 5, "step": 0.1, "name": "Aspect Ratio: " }
     }
   ],
 
@@ -75,7 +76,7 @@
       "name": "opacity",
       "type": "ordinal",
       "domain": [0, 1, 2, 3],
-      "range": [0.15, 0.5, 0.8, 1.0]
+      "range": [0.10, 0.5, 0.8, 1.0]
     }
   ],
 

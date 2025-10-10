@@ -1,131 +1,193 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": "container",
-  "height": "container",
-  "background": "black",
-  "projection": {
-    "type": "naturalEarth1",
-    "center": {
-      "expr": "RegionSelect=='West Malaysia' ? [102, 4] : (RegionSelect=='East Malaysia' ? [114, 4] : [109, 4])"
-    },
-    "scale": {
-      "expr": "RegionSelect=='Both' ? 4000 : (RegionSelect=='West Malaysia' ? 5500 : 4800)"
-    }
-  },
-  "params": [
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Interactive bubble chart of total visitors by state in Malaysia with linked bar chart showing top 5 countries for the selected state.",
+  "width": 1000,
+  "height": 500,
+  "padding": 0,
+
+  "data": [
     {
-      "name": "RegionSelect",
-      "value": "Both",
-      "bind": {
-        "input": "select",
-        "options": ["West Malaysia", "East Malaysia", "Both"],
-        "labels": ["West Malaysia", "East Malaysia", "Both"],
-        "name": "Region: "
-      }
+      "name": "table",
+      "url": "./data/visitors_by_state.csv",
+      "format": { "type": "csv", "parse": { "TOTAL_VISITORS": "number" } }
+    },
+    {
+      "name": "nodes",
+      "source": "table",
+      "transform": [
+        {
+          "type": "force",
+          "iterations": 400,
+          "static": true,
+          "forces": [
+            {
+              "force": "center",
+              "x": { "signal": "width / 3" },
+              "y": { "signal": "height / 3" }
+            },
+            {
+              "force": "collide",
+              "radius": { "expr": "max(70, sqrt(datum.TOTAL_VISITORS) * 3)" },
+              "strength": 0.01
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "countries",
+      "source": "table",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.STATE === selectedState"
+        },
+        {
+          "type": "formula",
+          "as": "splitCountries",
+          "expr": "split(datum.TOP5_COUNTRIES, '; ')"
+        },
+        { "type": "flatten", "fields": ["splitCountries"] },
+        {
+          "type": "formula",
+          "as": "country",
+          "expr": "trim(replace(datum.splitCountries, /\\s*\\([^)]*\\)/, ''))"
+        },
+        {
+          "type": "formula",
+          "as": "value",
+          "expr": "parseFloat(replace(datum.splitCountries, /.*\\(([^)]*)\\).*/, '$1'))"
+        }
+      ]
     }
   ],
-  "layer": [
+
+  "signals": [
     {
-      "data": {
-        "url": "./data/ne_10m_admin_1_states_provinces.topojson",
-        "format": {
-          "type": "topojson",
-          "feature": "ne_10m_admin_1_states_provinces"
-        }
-      },
-      "transform": [{ "filter": "datum.properties.admin === 'Malaysia'" }],
-      "mark": { "type": "geoshape", "stroke": "white", "fill": "black" }
+      "name": "selectedState",
+      "value": null,
+      "on": [
+        { "events": "symbol:click", "update": "datum.STATE" },
+        { "events": "dblclick", "update": "null" }
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": { "data": "table", "field": "STATE" },
+      "range": { "scheme": "category20" }
     },
     {
-      "data": {
-        "url": "./data/ne_10m_admin_1_states_provinces.topojson",
-        "format": {
-          "type": "topojson",
-          "feature": "ne_10m_admin_1_states_provinces"
-        }
-      },
-      "transform": [
-        { "filter": "datum.properties.admin === 'Malaysia'" },
-        {
-          "lookup": "properties.name",
-          "from": {
-            "data": { "url": "./data/visitors_by_state.csv" },
-            "key": "STATE",
-            "fields": ["TOTAL_VISITORS", "TOP5_COUNTRIES"]
-          }
-        }
-      ],
-      "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 2 },
-      "encoding": {
-        "color": {
-          "field": "TOTAL_VISITORS",
-          "type": "quantitative",
-          "legend": {
-            "orient": "bottom-left",
-            "direction": "horizontal",
-            "title": "Visitor Popularity (%)",
-            "labelColor": "white",
-            "titleColor": "white",
-            "labelFontSize": 12,
-            "titleFontSize": 14
+      "name": "xBar",
+      "type": "linear",
+      "domain": { "data": "countries", "field": "value" },
+      "nice": true,
+      "range": [0, 300]   
+    },
+    {
+      "name": "yBar",
+      "type": "band",
+      "domain": { "data": "countries", "field": "country" },
+      "range": [{ "signal": "height / 5" }, { "signal": "height - 200" }],
+      "padding": 0.2
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "symbol",
+      "from": { "data": "nodes" },
+      "encode": {
+        "enter": {
+          "fill": { "scale": "color", "field": "STATE" },
+          "stroke": { "value": "#333" },
+          "strokeWidth": { "value": 1 },
+          "cursor": { "value": "pointer" },
+          "tooltip": {
+            "signal": "'State: ' + datum.STATE + '\\nTotal Visitors: ' + datum.TOTAL_VISITORS"
           }
         },
-        "tooltip": [
-          { "field": "properties.name", "type": "nominal", "title": "State" },
-          {
-            "field": "TOTAL_VISITORS",
-            "type": "quantitative",
-            "title": "Visitors (%)"
+        "update": {
+          "x": { "field": "x" },
+          "y": { "field": "y" },
+          "size": {
+            "signal": "pow(max(80, sqrt(datum.TOTAL_VISITORS) * 30), 2)"
           },
-          {
-            "field": "TOP5_COUNTRIES",
-            "type": "nominal",
-            "title": "Top 5 Countries"
-          }
-        ]
+          "fillOpacity": [
+            { "test": "datum.STATE === selectedState", "value": 1 },
+            { "value": 0.6 }
+          ]
+        },
+        "hover": { "fillOpacity": { "value": 1 } }
       }
     },
     {
-      "data": { "url": "./data/visitors_by_state.csv" },
-      "mark": {
-        "type": "rect",
-        "width": 35,
-        "height": 18,
-        "fill": "black",
-        "fillOpacity": 0.5
-      },
-      "encoding": {
-        "longitude": { "field": "LON", "type": "quantitative" },
-        "latitude": { "field": "LAT", "type": "quantitative" }
+      "type": "text",
+      "from": { "data": "nodes" },
+      "encode": {
+        "enter": {
+          "text": { "field": "STATE" },
+          "align": { "value": "center" },
+          "baseline": { "value": "middle" },
+          "fontSize": {
+            "signal": "clamp(sqrt(datum.TOTAL_VISITORS) * 3, 10, 25)"
+          },
+          "fontWeight": { "value": "bold" },
+          "fill": { "value": "white" },
+          "cursor": { "value": "pointer" }
+        },
+        "update": { "x": { "field": "x" }, "y": { "field": "y" } }
       }
     },
     {
-      "data": { "url": "./data/visitors_by_state.csv" },
-      "mark": {
-        "type": "text",
-        "color": "white",
-        "fontSize": 15,
-        "fontWeight": "bold",
-        "align": "center",
-        "baseline": "middle"
-      },
-      "encoding": {
-        "longitude": { "field": "LON", "type": "quantitative" },
-        "latitude": { "field": "LAT", "type": "quantitative" },
-        "text": { "field": "TOTAL_VISITORS", "type": "quantitative" },
-        "tooltip": [
-          { "field": "STATE", "type": "nominal", "title": "State" },
-          {
-            "field": "TOTAL_VISITORS",
-            "type": "quantitative",
-            "title": "Visitors (%)"
-          },
-          {
-            "field": "TOP5_COUNTRIES",
-            "type": "nominal",
-            "title": "Top 5 Countries"
+      "type": "rect",
+      "from": { "data": "countries" },
+      "encode": {
+        "enter": {
+          "x": { "signal": "width * 0.7" },
+          "x2": { "signal": "width * 0.7 + scale('xBar', datum.value)" },
+          "y": { "scale": "yBar", "field": "country" },
+          "height": { "scale": "yBar", "band": 1 },
+          "fill": { "scale": "color", "field": "STATE" },
+          "tooltip": {
+            "signal": "'Country: ' + datum.country + '\\nVisitors: ' + datum.value"
           }
-        ]
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": { "data": "countries" },
+      "encode": {
+        "enter": {
+          "x": { "signal": "width * 0.7 + 5" },
+          "y": { "scale": "yBar", "field": "country", "band": 0.5 },
+          "text": { "field": "country" },
+          "align": { "value": "left" },
+          "baseline": { "value": "middle" },
+          "fontSize": { "value": 12 },
+          "fill": { "value": "black" }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": { "signal": "width * 0.7" },
+          "y": { "signal": "height / 5 - 20" },
+          "fontSize": { "value": 14 },
+          "fontWeight": { "value": "bold" },
+          "fill": { "value": "#333" }
+        },
+        "update": {
+          "text": {
+            "signal": "selectedState ? 'Top 5 Visitor Countries for ' + selectedState : 'Click a state bubble'"
+          }
+        }
       }
     }
   ]
