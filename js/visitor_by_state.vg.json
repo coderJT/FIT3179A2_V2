@@ -17,18 +17,18 @@
       "transform": [
         {
           "type": "force",
-          "iterations": 400,
+          "iterations": 500,
           "static": true,
           "forces": [
             {
               "force": "center",
-              "x": { "signal": "width / 3" },
+              "x": { "signal": "width / 3.5" },
               "y": { "signal": "height / 3" }
             },
             {
               "force": "collide",
               "radius": { "expr": "max(70, sqrt(datum.TOTAL_VISITORS) * 3)" },
-              "strength": 0.01
+              "strength": 0.1
             }
           ]
         }
@@ -65,7 +65,7 @@
   "signals": [
     {
       "name": "selectedState",
-      "value": null,
+      "value": "Johor",
       "on": [
         { "events": "symbol:click", "update": "datum.STATE" },
         { "events": "dblclick", "update": "null" }
@@ -85,7 +85,7 @@
       "type": "linear",
       "domain": { "data": "countries", "field": "value" },
       "nice": true,
-      "range": [0, 300]   
+      "range": [0, 300]
     },
     {
       "name": "yBar",
@@ -143,42 +143,11 @@
       }
     },
     {
-      "type": "rect",
-      "from": { "data": "countries" },
-      "encode": {
-        "enter": {
-          "x": { "signal": "width * 0.7" },
-          "x2": { "signal": "width * 0.7 + scale('xBar', datum.value)" },
-          "y": { "scale": "yBar", "field": "country" },
-          "height": { "scale": "yBar", "band": 1 },
-          "fill": { "scale": "color", "field": "STATE" },
-          "tooltip": {
-            "signal": "'Country: ' + datum.country + '\\nVisitors: ' + datum.value"
-          }
-        }
-      }
-    },
-    {
-      "type": "text",
-      "from": { "data": "countries" },
-      "encode": {
-        "enter": {
-          "x": { "signal": "width * 0.7 + 5" },
-          "y": { "scale": "yBar", "field": "country", "band": 0.5 },
-          "text": { "field": "country" },
-          "align": { "value": "left" },
-          "baseline": { "value": "middle" },
-          "fontSize": { "value": 12 },
-          "fill": { "value": "black" }
-        }
-      }
-    },
-    {
       "type": "text",
       "encode": {
         "enter": {
-          "x": { "signal": "width * 0.7" },
-          "y": { "signal": "height / 5 - 20" },
+          "x": { "signal": "width * 0.75" },
+          "y": { "signal": "height / 15" },
           "fontSize": { "value": 14 },
           "fontWeight": { "value": "bold" },
           "fill": { "value": "#333" }
@@ -189,6 +158,39 @@
           }
         }
       }
+    },
+    {
+      "type": "group",
+      "encode": {
+        "enter": {
+          "x": { "signal": "width * 0.75" },
+          "y": { "signal": "height - 550" },
+          "width": { "signal": "width * 0.3" },
+          "height": { "signal": "height - 200" }
+        }
+      },
+      "axes": [
+        { "orient": "bottom", "scale": "xBar", "title": "Visitors (in Millions)" },
+        { "orient": "left", "scale": "yBar", "title": "Country" }
+      ],
+      "marks": [
+        {
+          "type": "rect",
+          "from": { "data": "countries" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xBar", "value": 0 },
+              "x2": { "scale": "xBar", "field": "value" },
+              "y": { "scale": "yBar", "field": "country" },
+              "height": { "scale": "yBar", "band": 1 },
+              "fill": { "scale": "color", "field": "STATE" },
+              "tooltip": {
+                "signal": "'Country: ' + datum.country + '\\nVisitors: ' + datum.value"
+              }
+            }
+          }
+        }
+      ]
     }
   ]
 }

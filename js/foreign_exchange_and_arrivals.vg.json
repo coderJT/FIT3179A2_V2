@@ -1,8 +1,42 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Dual-axis line chart: USD/MYR vs Tourist Arrivals with independent scales",
+  "description": "Dual-axis line chart: selected currency/MYR vs Tourist Arrivals with independent scales",
   "width": 400,
   "height": 400,
+
+  "params": [
+    {
+      "name": "Currency",
+      "value": "USD",
+      "bind": {
+        "input": "select",
+        "options": [
+          "USD",
+          "GBP",
+          "EUR",
+          "JPY100",
+          "CHF",
+          "AUD",
+          "CAD",
+          "SGD",
+          "HKD100"
+        ],
+        "labels": [
+          "USD",
+          "GBP",
+          "EUR",
+          "JPY (100)",
+          "CHF",
+          "AUD",
+          "CAD",
+          "SGD",
+          "HKD (100)"
+        ],
+        "name": "Select Currency: "
+      }
+    }
+  ],
+
   "layer": [
     {
       "data": { "url": "./data/exchange-rates.csv" },
@@ -11,8 +45,9 @@
           "calculate": "datetime(year(datum.DATE), month(datum.DATE), 1)",
           "as": "YearMonth"
         },
+        { "calculate": "toNumber(datum[Currency])", "as": "Rate" },
         {
-          "aggregate": [{ "op": "average", "field": "USD", "as": "Avg_USD" }],
+          "aggregate": [{ "op": "average", "field": "Rate", "as": "Avg_Rate" }],
           "groupby": ["YearMonth"]
         }
       ],
@@ -30,9 +65,13 @@
           }
         },
         "y": {
-          "field": "Avg_USD",
+          "field": "Avg_Rate",
           "type": "quantitative",
-          "axis": { "title": "USD/MYR", "titleColor": "blue", "orient": "left" }
+          "axis": {
+            "title": { "signal": "Currency + '/MYR'" },
+            "titleColor": "blue",
+            "orient": "left"
+          }
         },
         "tooltip": [
           {
@@ -42,10 +81,10 @@
             "format": "%B %Y"
           },
           {
-            "field": "Avg_USD",
+            "field": "Avg_Rate",
             "type": "quantitative",
-            "title": "USD/MYR",
-            "format": ".2f"
+            "title": { "signal": "Currency + '/MYR'" },
+            "format": ".4f"
           }
         ]
       }
@@ -69,9 +108,24 @@
             "titleColor": "orange",
             "orient": "right"
           }
-        }
+        },
+        "tooltip": [
+          {
+            "field": "YearMonth",
+            "type": "temporal",
+            "title": "Month",
+            "format": "%B %Y"
+          },
+          {
+            "field": "Arrivals",
+            "type": "quantitative",
+            "title": "Tourist Arrivals",
+            "format": ","
+          }
+        ]
       }
     }
   ],
+
   "resolve": { "scale": { "y": "independent" } }
 }
