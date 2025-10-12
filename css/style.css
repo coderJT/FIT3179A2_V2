@@ -27,12 +27,39 @@ h2 {
 }
 
 h3 {
+  position: relative;
   color: #000;
   font-family: "Crimson Text";
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: 1.4;
+}
+/* 
+h3::first-letter {
+  font-size: 50px;
+  position: relative;
+  top: 10px; 
+  line-height: 0; 
+} */
+
+#date {
+  margin: 0;
+  line-height: 1.4;
+  color: #333;
+}
+
+#header div p#date:first-of-type {
+  font-size: 1.1em;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5em;
+}
+
+#header div p#date + br + p#date {
+  font-size: 0.95em;
+  color: #555;
 }
 
 h4 {
