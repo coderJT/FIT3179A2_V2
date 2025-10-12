@@ -31,11 +31,11 @@
     },
     {
       "name": "ColorScheme",
-      "value": "reds",
+      "value": "oranges",
       "bind": {
         "input": "select",
-        "options": ["reds", "blues", "greens"],
-        "labels": ["Reds", "Blues", "Greens"],
+        "options": ["oranges", "blues", "greens"],
+        "labels": ["Oranges", "Blues", "Greens"],
         "name": "Color Scheme: "
       }
     },
@@ -64,9 +64,9 @@
     {
       "data": {
         "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/7_others/oceans.topojson",
-        "format": {"type": "topojson", "feature": "oceans"}
+        "format": { "type": "topojson", "feature": "oceans" }
       },
-      "mark": {"type": "geoshape", "fill": "#cce7ff"}
+      "mark": { "type": "geoshape", "fill": "#cce7ff" }
     },
     {
       "data": {
@@ -128,7 +128,11 @@
         "color": {
           "field": "GUEST_SELECTED",
           "type": "quantitative",
-          "scale": { "scheme": { "expr": "ColorScheme" } },
+          "scale": {
+            "type": "threshold",
+            "domain": [2000000, 6000000, 12000000],
+            "scheme": { "expr": "ColorScheme" }
+          },
           "legend": {
             "orient": "bottom-right",
             "direction": "horizontal",
@@ -160,12 +164,12 @@
         ]
       }
     },
-      {
+    {
       "data": {
         "url": "./data/ne_10m_graticules_5.topojson",
-        "format": {"type": "topojson", "feature": "ne_10m_graticules_5"}
+        "format": { "type": "topojson", "feature": "ne_10m_graticules_5" }
       },
-      "mark": {"type": "geoshape", "fill": null, "stroke": "#ddd"}
+      "mark": { "type": "geoshape", "fill": null, "stroke": "#ddd" }
     }
   ]
 }
