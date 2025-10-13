@@ -5,9 +5,11 @@
   "data": {
     "url": "./data/mode_of_transport.csv"
   },
-  "transform": [
-    { "filter": "datum.MODE_OF_TRANSPORT != 'TOTAL'" }
-  ],
+  "title": {
+    "text": "Mode of Travel Transport in 2024",
+    "fontSize": 18
+  },
+  "transform": [{ "filter": "datum.MODE_OF_TRANSPORT != 'TOTAL'" }],
   "mark": { "type": "arc", "outerRadius": 150 },
   "encoding": {
     "theta": {

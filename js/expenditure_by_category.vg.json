@@ -4,8 +4,19 @@
   "width": 1000,
   "height": 400,
   "padding": 2.5,
-  "autosize": "none",
-
+    "title": {
+    "text": "Visitor Expenditure in Malaysia",
+    "fontSize": 24,
+    "font": "Inter",
+    "fontWeight": "bold",
+    "anchor": "start",
+    "offset": 15,
+    "subtitle": "Visualizing the categories of expenditure by foreign visitors.",
+    "subtitleFont": "Helvetica Neue",
+    "subtitleFontSize": 14,
+    "subtitleColor": "#555",
+    "subtitlePadding": 5
+    },
   "signals": [
     {
       "name": "layout",

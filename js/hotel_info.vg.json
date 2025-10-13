@@ -9,6 +9,13 @@
     "scale": { "expr": "zoom" },
     "center": { "expr": "[centerLon, centerLat]" }
   },
+  "title": {
+    "text": "Malaysia Hotel Occupancy by State",
+    "fontSize": 24,
+    "font": "Inter",
+    "fontWeight": "bold",
+    "offset": 15
+  },
   "params": [
     {
       "name": "centerLon",

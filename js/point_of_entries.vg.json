@@ -5,6 +5,13 @@
     "url": "./data/arrivals_by_state_date.csv",
     "format": { "type": "csv" }
   },
+  "title": {
+    "text": "Top Entry Points from 2020 - 2024",
+    "fontSize": 24,
+    "font": "Inter",
+    "fontWeight": "bold",
+    "anchor": "middle"
+  },
   "vconcat": [
     {
       "width": 1000,

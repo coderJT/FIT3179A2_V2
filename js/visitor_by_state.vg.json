@@ -4,7 +4,13 @@
   "width": 1000,
   "height": 500,
   "padding": 0,
-
+  "title": {
+    "text": "Malaysia States by Visitor Count",
+    "fontSize": 24,
+    "font": "Inter",
+    "fontWeight": "bold",
+    "offset": 30
+  },
   "data": [
     {
       "name": "table",
@@ -170,7 +176,11 @@
         }
       },
       "axes": [
-        { "orient": "bottom", "scale": "xBar", "title": "Visitors (in Millions)" },
+        {
+          "orient": "bottom",
+          "scale": "xBar",
+          "title": "Visitors (in Millions)"
+        },
         { "orient": "left", "scale": "yBar", "title": "Country" }
       ],
       "marks": [

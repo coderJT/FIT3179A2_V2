@@ -3,6 +3,12 @@
   "description": "Dual-axis line chart: selected currency/MYR vs Tourist Arrivals with independent scales",
   "width": 400,
   "height": 400,
+  "title": {
+    "text": "Exchange Rates and Visitors Count",
+    "fontSize": 18,
+    "font": "Inter",
+    "fontWeight": "bold"
+  },
 
   "params": [
     {
