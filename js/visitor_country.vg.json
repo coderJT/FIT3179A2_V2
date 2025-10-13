@@ -1,11 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-  "text": "Top 20 Countries Flow to Malaysia",
-  "fontSize": 24,
-  "font": "Inter",
-  "fontWeight": "bold"
-},
+    "text": "Top 20 Countries Flow to Malaysia",
+    "fontSize": 24,
+    "font": "Inter",
+    "fontWeight": "bold"
+  },
   "width": "container",
   "height": "600",
   "projection": {
@@ -131,7 +131,7 @@
           {
             "field": "growth",
             "type": "quantitative",
-            "title": "Percentage Growth (2023 to 2024) (%)",
+            "title": "% Growth (2023 to 2024)",
             "format": ",d"
           }
         ]

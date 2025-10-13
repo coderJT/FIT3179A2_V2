@@ -1,19 +1,33 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": "300",
-  "height": "400",
+  "width": 300,
+  "height": 400,
   "data": {
     "url": "./data/mode_of_transport.csv"
   },
   "title": {
-    "text": "Mode of Travel Transport in 2024",
+    "text": "Mode of Travel Transport",
     "fontSize": 18
   },
-  "transform": [{ "filter": "datum.MODE_OF_TRANSPORT != 'TOTAL'" }],
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": "2024",
+      "bind": {
+        "input": "select",
+        "options": ["2023", "2024"],
+        "name": "Select Year: "
+      }
+    }
+  ],
+  "transform": [
+    { "filter": "datum.MODE_OF_TRANSPORT != 'TOTAL'" },
+    { "calculate": "toNumber(datum[selectedYear])", "as": "visitors" }
+  ],
   "mark": { "type": "arc", "outerRadius": 150 },
   "encoding": {
     "theta": {
-      "field": "2024",
+      "field": "visitors",
       "type": "quantitative",
       "title": "Total Arrivals"
     },
@@ -29,7 +43,12 @@
     },
     "tooltip": [
       { "field": "MODE OF TRANSPORT", "type": "nominal", "title": "Mode" },
-      { "field": "2024", "type": "quantitative", "title": "Arrivals (2024)" },
+      {
+        "field": "visitors",
+        "type": "quantitative",
+        "title": "Arrivals",
+        "format": ","
+      },
       { "field": "% SHARE 2024", "type": "quantitative", "title": "Share (%)" }
     ]
   },
