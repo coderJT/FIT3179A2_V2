@@ -7,7 +7,7 @@
     "fontWeight": "bold"
   },
   "width": "container",
-  "height": "600",
+  "height": "700",
   "projection": {
     "type": "naturalEarth1",
     "scale": 300
@@ -106,9 +106,9 @@
           "field": "visitors",
           "type": "quantitative",
           "scale": {
-            "scheme": "reds",
-            "domain": [20000000, 1],
-            "reverse": true
+            "type": "threshold",
+            "domain": [1000000, 5000000, 10000000, 15000000],
+            "range": ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"]
           },
           "legend": {
             "orient": "bottom-left",
