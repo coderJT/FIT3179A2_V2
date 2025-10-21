@@ -1,16 +1,19 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Top 20 Countries Flow to Malaysia",
-    "fontSize": 24,
-    "font": "Inter",
+    "text": "Top 20 Countries Visting Malaysia",
+    "fontSize": 25,
+    "font": "Crimson Text",
+    "anchor": "start",
     "fontWeight": "bold"
   },
+  "padding": 0,
   "width": "container",
-  "height": "700",
+  "height": "550",
   "projection": {
     "type": "naturalEarth1",
-    "scale": 300
+    "scale": 300,
+    "center": [0, 15]
   },
   "params": [
     {
@@ -136,6 +139,206 @@
           }
         ]
       }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "country": "China",
+            "longitude": 60.0,
+            "latitude": 35.0,
+            "label": "China"
+          }
+        ]
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "text",
+            "text": "Tourists from China are",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "#222",
+            "dx": 8,
+            "dy": -8,
+            "align": "left"
+          },
+          "encoding": {
+            "longitude": { "field": "longitude", "type": "quantitative" },
+            "latitude": { "field": "latitude", "type": "quantitative" }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "text": "growing fast in recent years",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "#222",
+            "dx": 8,
+            "dy": 6,
+            "align": "left"
+          },
+          "encoding": {
+            "longitude": { "field": "longitude", "type": "quantitative" },
+            "latitude": { "field": "latitude", "type": "quantitative" }
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "country": "Singapore",
+            "longitude": 65.8198,
+            "latitude": 2.3521,
+            "label": "Singapore"
+          }
+        ]
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "text",
+            "text": "Singapore has the most",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "#222",
+            "dx": 8,
+            "dy": -8,
+            "align": "left"
+          },
+          "encoding": {
+            "longitude": { "field": "longitude", "type": "quantitative" },
+            "latitude": { "field": "latitude", "type": "quantitative" }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "text": "traveler count to Malaysia",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "#222",
+            "dx": 8,
+            "dy": 6,
+            "align": "left"
+          },
+          "encoding": {
+            "longitude": { "field": "longitude", "type": "quantitative" },
+            "latitude": { "field": "latitude", "type": "quantitative" }
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "country": "France",
+            "longitude": 2.2137,
+            "latitude": 46.2276,
+            "label": "France"
+          }
+        ]
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "text",
+            "text": "Visitors from France",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "#222",
+            "dx": -30,
+            "dy": 24,
+            "align": "left"
+          },
+          "encoding": {
+            "longitude": { "field": "longitude", "type": "quantitative" },
+            "latitude": { "field": "latitude", "type": "quantitative" }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "text": "shows the highest growth",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "#222",
+            "dx": -30,
+            "dy": 36,
+            "align": "left"
+          },
+          "encoding": {
+            "longitude": { "field": "longitude", "type": "quantitative" },
+            "latitude": { "field": "latitude", "type": "quantitative" }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "text": "among European countries",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "#222",
+            "dx": -30,
+            "dy": 48,
+            "align": "left"
+          },
+          "encoding": {
+            "longitude": { "field": "longitude", "type": "quantitative" },
+            "latitude": { "field": "latitude", "type": "quantitative" }
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "country": "United States",
+            "longitude": -98.5795,
+            "latitude": 39.8283,
+            "label": "United States"
+          }
+        ]
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "text",
+            "text": "The United states has the highest",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "#222",
+            "dx": 32,
+            "dy": -8,
+            "align": "left"
+          },
+          "encoding": {
+            "longitude": { "field": "longitude", "type": "quantitative" },
+            "latitude": { "field": "latitude", "type": "quantitative" }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "text": "number of visitors from the Americas",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "#222",
+            "dx": 32,
+            "dy": 6,
+            "align": "left"
+          },
+          "encoding": {
+            "longitude": { "field": "longitude", "type": "quantitative" },
+            "latitude": { "field": "latitude", "type": "quantitative" }
+          }
+        }
+      ]
     }
   ]
 }

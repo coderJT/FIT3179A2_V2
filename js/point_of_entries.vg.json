@@ -1,67 +1,227 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Sum of Arrivals within Timeframe",
+  "title": {
+    "text": "Arrivals by Entry Point State and Gender",
+    "fontSize": 25,
+    "font": "Crimson Text",
+    "fontWeight": "bold",
+    "anchor": "middle"
+  },
   "data": {
     "url": "./data/arrivals_by_state_date.csv",
     "format": { "type": "csv" }
   },
-  "title": {
-    "text": "Top Entry Points from 2020 - 2024",
-    "fontSize": 24,
-    "font": "Inter",
-    "fontWeight": "bold",
-    "anchor": "middle"
-  },
   "vconcat": [
     {
-      "width": 1000,
-      "height": 300,
-      "mark": "bar",
-      "encoding": {
-        "x": {
-          "field": "soe",
-          "type": "nominal",
-          "title": "States in Malaysia"
-        },
-        "y": {
-          "field": "total_arrivals",
-          "type": "quantitative",
-          "title": "Entry counts per State"
-        },
-        "tooltip": [
-          { "field": "soe", "type": "nominal", "title": "State" },
-          {
-            "field": "total_arrivals",
-            "type": "quantitative",
-            "title": "Total arrivals"
-          }
-        ]
-      },
-      "transform": [
+      "hconcat": [
         {
-          "filter": {
-            "param": "brush"
-          }
-        },
-        {
-          "aggregate": [
-            { "op": "sum", "field": "total_arrivals", "as": "total_arrivals" }
+          "width": 500,
+          "height": 300,
+          "title": "Arrivals by Gender and State",
+          "transform": [
+            { "filter": { "param": "brush" } },
+            {
+              "fold": ["arrivals_male", "arrivals_female"],
+              "as": ["gender", "arrivals"]
+            },
+            {
+              "calculate": "datum.gender == 'arrivals_male' ? 'Male' : 'Female'",
+              "as": "Gender"
+            },
+            {
+              "calculate": "datum.Gender == 'Male' ? -datum.arrivals : datum.arrivals",
+              "as": "AdjustedArrivals"
+            },
+            {
+              "aggregate": [
+                {
+                  "op": "sum",
+                  "field": "AdjustedArrivals",
+                  "as": "total_arrivals"
+                }
+              ],
+              "groupby": ["soe", "Gender"]
+            },
+            {
+              "calculate": "abs(datum.total_arrivals)",
+              "as": "abs_arrivals"
+            }
           ],
-          "groupby": ["soe"]
+          "layer": [
+            {
+              "mark": "bar",
+              "encoding": {
+                "y": {
+                  "field": "soe",
+                  "type": "nominal",
+                  "title": "State",
+                  "sort": {
+                    "field": "abs_arrivals",
+                    "order": "descending"
+                  }
+                },
+                "x": {
+                  "field": "total_arrivals",
+                  "type": "quantitative",
+                  "title": "Arrivals (Male vs Female)",
+                  "axis": {
+                    "format": "s",
+                    "title": "Arrivals",
+                    "labelExpr": "datum.value < 0 ? format(-datum.value, ',') : format(datum.value, ',')"
+                  }
+                },
+                "color": {
+                  "field": "Gender",
+                  "type": "nominal",
+                  "scale": { "range": ["#1f77b4", "#ff7f0e"] },
+                  "legend": {
+                    "title": "Gender",
+                    "orient": "top-right",
+                    "direction": "horizontal",
+                    "offset": -40
+                  }
+                },
+                "tooltip": [
+                  { "field": "soe", "title": "State" },
+                  { "field": "Gender", "title": "Gender" },
+                  {
+                    "field": "abs_arrivals",
+                    "title": "Arrivals",
+                    "format": ","
+                  }
+                ]
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "text": "Males dominate most arrivals",
+                "fontSize": 13,
+                "dx": 40,
+                "dy": -120
+              },
+              "encoding": {
+                "x": { "value": 90 },
+                "y": { "value": 300 }
+              }
+            }
+          ],
+          "config": {
+            "axisY": { "title": null }
+          }
+        },
+        {
+          "width": 500,
+          "height": 300,
+          "mark": { "type": "bar", "color": "#B4436C" },
+          "title": "Total Arrivals by State",
+          "encoding": {
+            "x": {
+              "field": "soe",
+              "type": "nominal",
+              "title": "States in Malaysia",
+              "sort": "-y"
+            },
+            "y": {
+              "field": "total_arrivals",
+              "type": "quantitative",
+              "title": "Entry counts per State"
+            },
+            
+            "tooltip": [
+              { "field": "soe", "type": "nominal", "title": "State" },
+              {
+                "field": "total_arrivals",
+                "type": "quantitative",
+                "title": "Total arrivals",
+                "format": ","
+              }
+            ]
+          },
+          "transform": [
+            { "filter": { "param": "brush" } },
+            {
+              "aggregate": [
+                {
+                  "op": "sum",
+                  "field": "total_arrivals",
+                  "as": "total_arrivals"
+                }
+              ],
+              "groupby": ["soe"]
+            }
+          ],
+          "layer": [
+            {
+              "mark": { "type": "bar", "color": "#B4436C" },
+              "encoding": {
+                "x": {
+                  "field": "soe",
+                  "type": "nominal",
+                  "title": "States in Malaysia",
+                  "sort": "-y"
+                },
+                "y": {
+                  "field": "total_arrivals",
+                  "type": "quantitative",
+                  "title": "Entry counts per State"
+                },
+                "tooltip": [
+                  { "field": "soe", "type": "nominal", "title": "State" },
+                  {
+                    "field": "total_arrivals",
+                    "type": "quantitative",
+                    "title": "Total arrivals",
+                    "format": ","
+                  }
+                ]
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "text": "Johor leads with the highest entry count",
+                "fontSize": 13,
+                "dx": 0,
+                "dy": 120
+              },
+              "encoding": {
+                "x": { "value": 200 },
+                "y": { "value": 20 }
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "text": "Least visited states",
+                "fontSize": 13,
+                "dx": 0,
+                "dy": 120
+              },
+              "encoding": {
+                "x": { "value": 400 },
+                "y": { "value": 160 }
+              }
+            }
+          ],
+          "config": {
+            "axisY": { "title": null }
+          }
         }
       ]
     },
     {
-      "width": 1000,
-      "height": 100,
+      "width": 1100,
+      "height": 120,
       "mark": "line",
+      "title": "Timeline of Total Arrivals (Updated monthly)",
       "encoding": {
         "x": {
           "field": "date",
           "type": "temporal",
           "timeUnit": "yearmonthdate",
           "title": "Date",
-          "axis": { "tickCount": "day", "format": "%d %b %Y" }
+          "axis": { "tickCount": "month", "format": "%b %Y" }
         },
         "y": {
           "field": "total_arrivals",

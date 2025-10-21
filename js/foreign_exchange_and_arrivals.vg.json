@@ -1,12 +1,12 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Dual-axis line chart: selected currency/MYR vs Tourist Arrivals with independent scales",
-  "width": 400,
+  "width": 600,
   "height": 400,
   "title": {
     "text": "Exchange Rates and Visitors Count",
-    "fontSize": 18,
-    "font": "Inter",
+    "fontSize": 25,
+    "font": "Crimson Text",
     "fontWeight": "bold"
   },
 
@@ -58,6 +58,7 @@
         }
       ],
       "mark": { "type": "line", "color": "blue", "point": true },
+
       "encoding": {
         "x": {
           "field": "YearMonth",
@@ -89,12 +90,13 @@
           {
             "field": "Avg_Rate",
             "type": "quantitative",
-            "title": { "signal": "Currency + '/MYR'" },
+            "title": "Exchange Rate to MYR",
             "format": ".4f"
           }
         ]
       }
     },
+
     {
       "data": { "url": "./data/monthly_visitors.csv" },
       "transform": [

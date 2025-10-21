@@ -1,63 +1,271 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 300,
-  "height": 400,
-  "data": {
-    "url": "./data/mode_of_transport.csv"
-  },
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 400,
+  "height": 700,
   "title": {
-    "text": "Mode of Travel Transport",
-    "fontSize": 18
+    "text": "Visitor Arrivals: Transport Mode To Entry Point",
+    "fontSize": 22,
+    "fontWeight": "bold",
+    "font": "Crimson Text",
+    "anchor": "middle",
+    "offset": -130
   },
-  "params": [
+  "padding": { "left": -200, "right": 0, "top": -100, "bottom": -275 },
+  "data": [
     {
-      "name": "selectedYear",
-      "value": "2024",
-      "bind": {
-        "input": "select",
-        "options": ["2023", "2024"],
-        "name": "Select Year: "
-      }
+      "name": "rawData",
+      "url": "./data/point_of_entries.csv",
+      "format": { "type": "csv" },
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "toNumber(datum['VISITOR ARRIVAL COUNT'])",
+          "as": "size"
+        },
+        {
+          "type": "aggregate",
+          "groupby": ["TRANSPORT", "POINT_OF_ENTRY"],
+          "fields": ["size"],
+          "ops": ["sum"],
+          "as": ["size"]
+        },
+        {
+          "type": "window",
+          "sort": { "field": "size", "order": "descending" },
+          "groupby": ["TRANSPORT"],
+          "ops": ["rank"],
+          "as": ["rank"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.rank > 10 ? 'OTHERS' : datum['POINT_OF_ENTRY']",
+          "as": "POINT_OF_ENTRY"
+        },
+        {
+          "type": "aggregate",
+          "groupby": ["TRANSPORT", "POINT_OF_ENTRY"],
+          "fields": ["size"],
+          "ops": ["sum"],
+          "as": ["size"]
+        }
+      ]
+    },
+    {
+      "name": "nodes",
+      "source": "rawData",
+      "transform": [
+        {
+          "type": "fold",
+          "fields": ["TRANSPORT", "POINT_OF_ENTRY"],
+          "as": ["stack", "grpId"]
+        },
+        {
+          "type": "stack",
+          "groupby": ["stack"],
+          "sort": { "field": "grpId", "order": "ascending" },
+          "field": "size"
+        },
+        { "type": "formula", "as": "yc", "expr": "(datum.y0 + datum.y1)/2" }
+      ]
+    },
+    {
+      "name": "destinationNodes",
+      "source": "nodes",
+      "transform": [
+        { "type": "filter", "expr": "datum.stack == 'POINT_OF_ENTRY'" }
+      ]
+    },
+    {
+      "name": "uniqueSources",
+      "source": "nodes",
+      "transform": [
+        { "type": "filter", "expr": "datum.stack == 'TRANSPORT'" },
+        {
+          "type": "aggregate",
+          "groupby": ["TRANSPORT"],
+          "fields": ["y0", "y1", "size"],
+          "ops": ["min", "max", "sum"],
+          "as": ["y0", "y1", "total"]
+        },
+        {
+          "type": "formula",
+          "as": "yc",
+          "expr": "(datum.y0 + datum.y1)/2"
+        }
+      ]
+    },
+
+    {
+      "name": "edges",
+      "source": "nodes",
+      "transform": [
+        { "type": "filter", "expr": "datum.stack == 'TRANSPORT'" },
+        {
+          "type": "lookup",
+          "from": "destinationNodes",
+          "key": "POINT_OF_ENTRY",
+          "fields": ["POINT_OF_ENTRY"],
+          "as": ["target"]
+        },
+        {
+          "type": "linkpath",
+          "orient": "horizontal",
+          "shape": "diagonal",
+          "sourceY": { "expr": "scale('y', datum.yc)" },
+          "sourceX": {
+            "expr": "scale('x', 'TRANSPORT') + bandwidth('x') * 0.35"
+          },
+          "targetY": { "expr": "scale('y', datum.target.yc)" },
+          "targetX": {
+            "expr": "scale('x', 'POINT_OF_ENTRY') + bandwidth('x') * 0.65"
+          }
+        },
+        {
+          "type": "formula",
+          "as": "strokeWidth",
+          "expr": "abs(scale('y', datum.y0) - scale('y', datum.y1))"
+        }
+      ]
     }
   ],
-  "transform": [
-    { "filter": "datum.MODE_OF_TRANSPORT != 'TOTAL'" },
-    { "calculate": "toNumber(datum[selectedYear])", "as": "visitors" }
-  ],
-  "mark": { "type": "arc", "outerRadius": 150 },
-  "encoding": {
-    "theta": {
-      "field": "visitors",
-      "type": "quantitative",
-      "title": "Total Arrivals"
+
+  "scales": [
+    {
+      "name": "x",
+      "type": "band",
+      "range": [0, { "signal": "width" }],
+      "domain": ["TRANSPORT", "POINT_OF_ENTRY"],
+      "paddingInner": 0.4,
+      "paddingOuter": 0
     },
-    "color": {
-      "field": "MODE OF TRANSPORT",
-      "type": "nominal",
-      "title": "Mode of Transport",
-      "scale": { "scheme": "tableau20" },
-      "legend": {
-        "labelColor": "#555555",
-        "titleColor": "#555555"
-      }
-    },
-    "tooltip": [
-      { "field": "MODE OF TRANSPORT", "type": "nominal", "title": "Mode" },
-      {
-        "field": "visitors",
-        "type": "quantitative",
-        "title": "Arrivals",
-        "format": ","
+    {
+      "name": "y",
+      "type": "linear",
+      "range": { "signal": "[100, height - 10]" },
+      "domain": {
+        "fields": [
+          { "data": "nodes", "field": "y0" },
+          { "data": "nodes", "field": "y1" }
+        ]
       },
-      { "field": "% SHARE 2024", "type": "quantitative", "title": "Share (%)" }
-    ]
-  },
-  "view": { "stroke": null },
-  "config": {
-    "title": {
-      "anchor": "start",
-      "fontSize": 16,
-      "color": "#333333"
+      "nice": false,
+      "clamp": true
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": ["AIR", "LAND", "SEA", "RAIL"],
+      "range": ["#00bcd4", "#4caf50", "#ff9800", "#9c27b0"]
     }
-  }
+  ],
+  "marks": [
+    {
+      "type": "path",
+      "from": { "data": "edges" },
+      "encode": {
+        "update": {
+          "stroke": { "scale": "color", "field": "TRANSPORT" },
+          "strokeWidth": { "field": "strokeWidth" },
+          "strokeOpacity": { "value": 0.4 },
+          "path": { "field": "path" },
+          "tooltip": {
+            "signal": "datum.TRANSPORT + ' -> ' + datum['POINT_OF_ENTRY'] + ': ' + format(datum.size, ',')"
+          }
+        },
+        "hover": { "strokeOpacity": { "value": 1 } }
+      }
+    },
+    {
+      "type": "rect",
+      "from": { "data": "uniqueSources" },
+      "encode": {
+        "enter": {
+          "x": { "signal": "scale('x', 'TRANSPORT') " },
+          "width": { "signal": "bandwidth('x') * 0.35" },
+          "y": { "signal": "scale('y', datum.y0)" },
+          "y2": { "signal": "scale('y', datum.y1)" },
+          "fill": { "scale": "color", "field": "TRANSPORT" },
+          "stroke": { "value": "#fff" },
+          "strokeWidth": { "value": 1 },
+          "cornerRadius": { "value": 3 },
+          "tooltip": {
+            "signal": "datum.TRANSPORT + ': ' + format(datum.total, ',') + ' visitor arrivals'"
+          }
+        }
+      }
+    },
+
+    {
+      "type": "rect",
+      "from": { "data": "nodes" },
+      "encode": {
+        "enter": {
+          "x": {
+            "signal": "scale('x', 'POINT_OF_ENTRY') + bandwidth('x') * 0.65"
+          },
+          "width": { "signal": "bandwidth('x') * 0.35" },
+          "y": { "signal": "scale('y', datum.y0)" },
+          "y2": { "signal": "scale('y', datum.y1)" },
+          "fill": { "value": "#bbb" },
+          "stroke": { "value": "#fff" },
+          "strokeWidth": { "value": 1 },
+          "cornerRadius": { "value": 3 },
+          "tooltip": {
+            "signal": "datum.POINT_OF_ENTRY + ': ' + format(datum.size, ',')"
+          }
+        },
+        "update": {
+          "opacity": { "signal": "datum.stack == 'POINT_OF_ENTRY' ? 1 : 0" }
+        }
+      }
+    },
+
+    {
+      "type": "text",
+      "from": { "data": "uniqueSources" },
+      "encode": {
+        "enter": {
+          "x": {
+            "signal": "scale('x', datum.stack) + (datum.stack == 'TRANSPORT' ? -100 : 100)"
+          },
+          "y": { "signal": "scale('y', datum.yc)" },
+          "align": {
+            "signal": "datum.stack == 'TRANSPORT' ? 'right' : 'left'"
+          },
+          "baseline": { "value": "middle" },
+          "fontSize": { "value": 12 },
+          "fontWeight": { "value": 600 },
+          "fill": { "value": "#333" },
+          "text": { "field": "TRANSPORT" },
+          "dx": { "signal": "datum.stack == 'TRANSPORT' ? -50 : -50" }
+        },
+        "update": {
+          "y": {
+            "signal": "scale('y', datum.yc) + (datum.stack == 'POINT_OF_ENTRY' ? (indexof(data('nodes'), datum) % 2 == 0 ? -4 : 4) : 0)"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": { "data": "destinationNodes" },
+      "encode": {
+        "enter": {
+          "x": {
+            "signal": "scale('x', 'POINT_OF_ENTRY') + bandwidth('x') + 10"
+          },
+          "y": { "signal": "scale('y', datum.yc)" },
+          "align": { "value": "left" },
+          "baseline": { "value": "middle" },
+          "fontSize": { "value": 12 },
+          "fontWeight": { "value": 600 },
+          "fill": { "value": "#333" },
+          "text": { "field": "grpId" },
+          "dx": { "signal": "datum.stack == 'TRANSPORT' ? -5 : -5" }
+        }
+      }
+    }
+  ],
+
+  "config": { "view": { "stroke": "transparent" } }
 }

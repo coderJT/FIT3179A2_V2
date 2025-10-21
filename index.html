@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Foreign Visitors Visualisation</title>
 
     <!-- Import Vega & Vega-Lite -->
     <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
       rel="stylesheet"
     />
 
@@ -22,32 +22,43 @@
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <div id="header">
-      <div>
-        <h1 style="font-size: 50px">The Foreign</h1>
-        <h1>Tourist Ecosystem in Malaysia</h1>
+    <header class="hero">
+      <nav class="navbar">
+        <h1 class="logo">TOURISM IN MALAYSIA</h1>
+        <ul class="nav-links">
+          <li><a href="#overview">Visitor Overview</a></li>
+          <li><a href="#activity">Tourism Activity</a></li>
+          <li><a href="#insights">Regional Insights</a></li>
+          <li><a href="#trends">Trends & Economics</a></li>
+        </ul>
+      </nav>
 
-        <h4>
-          This visualization provides an interactive overview of Malaysia's
+      <h2 style="font-family: Crimson Pro">Foreign Visitors Visualisation</h2>
+      <div class="intro">
+        <h2>INTRODUCTION:</h2>
+        <p style="font-family: 'inter'">
+          Tourism plays a vital role in Malaysia's economy, reflecting the
           <br />
-          tourism landscape in 2023/2024.
-        </h4>
-      </div>
-      <div>
-        <p id="date"><b>Tourism Report</b><br />Kuala Lumpur, Malaysia</p>
-        <br />
-        <p id="date">
-          Published: 19 September 2025<br />Last Updated: 10 October 2025
+          country's vibrant culture, natural beauty, and global appeal. This
+          dashboard <br />
+          presents an in-depth look at Malaysia's tourism landscape,
+          exploring<br />
+          who visits, how they travel, and where they go.<br /></br>
+          Through data-driven insights on visitor arrivals, spending,
+          accommodation, and regional distribution, this visualization aims to
+          provide a clearer understanding <br />of tourism trends and their
+          impact on Malaysia's growth.
         </p>
       </div>
-    </div>
+    </header>
 
     <div id="content">
+      <div class="section-label" id="overview">Visitor Overview</div>
       <div class="section">
         <div
           class="visualisation"
           id="visitor_country"
-          style="width: 100vw"
+          style="width: 90vw"
         ></div>
         <div class="two-col-grid">
           <div class="text-content-title">
@@ -66,15 +77,168 @@
             <b>Indonesia</b> and <b>Thailand</b> leading the arrivals. During
             2024, arrivals from Singapore surpassed <u>18 million</u>,
             reflecting strong cross-border tourism ties and Malaysia's role as a
-            regional hub. While short-haul travellers dominate, long-haul
-            visitors from China, India, and the United Kingdom have also grown
-            sharply, supported by new flight routes and visa-friendly policies.
+            regional hub. <br />
+            <br />
+            While short-haul travellers dominate, long-haul visitors from China,
+            India, and the United Kingdom have also grown sharply, supported by
+            new flight routes and visa-friendly policies.
+          </h3>
+        </div>
+
+        <div class="section">
+          <div class="two-col-grid">
+            <div>
+              <h2 style="margin-bottom: 0.7em">
+                <span>
+                  <div class="number">2</div>
+                </span>
+                Air and Land Dominate Foreign <br />
+                Visitor Arrivals
+              </h2>
+              <h3 class="paragraph">
+                Malaysia's 2024 visitor data shows a nation on the move by land,
+                air, and sea. <b style="color: #73ae57">Land</b> crossings
+                dominate, led by Johor's Tambak Johor with over 14 million
+                arrivals from Singapore.
+                <b style="color: #69bad2">Air</b> travel remains vital, with
+                KLIA and KLIA 2 welcoming over 8 million visitors, alongside key
+                airports in Penang, Kota Kinabalu, and Johor Bahru.
+                <b style="color: #e78323">Sea</b> routes, though smaller,
+                connect through ports like Stulang Laut and Pelabuhan Klang.
+                <b style="color: #862cab">Rail</b> have the lowest visitor,
+                mainly through Woodlands Train Checkpoint.
+              </h3>
+            </div>
+            <div
+              class="visualisation"
+              id="mode_of_transport"
+              style="width: 55vw"
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="visualisation" id="point_of_entries"></div>
+        <div class="two-col-grid" style="margin-top: 3em">
+          <div class="text-content-title">
+            <h2 class="align-self: left">
+              <span>
+                <div class="number">3</div>
+              </span>
+              Tourist Entries by <br />
+              Entry Point State and Month
+            </h2>
+            <div class="divider" style="margin-right: 80px"></div>
+          </div>
+          <h3 class="paragraph">
+            <b style="color: #b4436c">Johor</b> stands out overwhelmingly,
+            recording nearly 50 million entries, followed by
+            <b style="color: #b4436c">Selangor</b> and
+            <b style="color: #b4436c">Sarawak</b>, reflecting their roles as
+            Malaysia's main international and regional gateways. The gender
+            breakdown shows a relatively balanced mix across most states, with
+            slightly higher <b style="color: #e47e24">male</b> arrivals at key
+            crossings such <br />
+            as Johor. The timeline chart below reveals a sharp decline <br />in
+            early 2020, coinciding with global travel restrictions, followed by
+            a steady recovery beginning in 2022 and sustained growth through
+            2024 - a clear indicator of Malaysia's tourism rebound and reopening
+            momentum.
+          </h3>
+        </div>
+      </div>
+      <div class="section-label" id="activity">Tourism Activity</div>
+      <div class="section">
+        <div class="visualisation" id="visitor_by_state"></div>
+        <div class="two-col-grid">
+          <div class="text-content-title">
+            <h2 class="align-self: left">
+              <span>
+                <div class="number">4</div>
+              </span>
+              Tourism Hotspots Across <br />
+              Malaysia In 2023
+            </h2>
+            <div class="divider" style="margin-right: 80px"></div>
+          </div>
+          <h3 class="paragraph">
+            The visualization highlights Malaysia's top tourist states and their
+            main visitor sources. The packed bubble chart shows
+            <b style="color: #4876b0">Johor</b> as the leading destination,
+            followed by <b style="color: #b4c5e6">Kedah</b>,
+            <b style="color: #e47e24">Kuala Lumpur</b>, and
+            <b style="color: #eeba7b">Selangor</b>. Smaller states like
+            <b style="color: #d4c9e1">Perlis</b> and
+            <b style="color: #e79795">Sabah</b> record lower counts. The
+            interactive bar chart updates based on the selected state. Here,
+            <b style="color: #4876b0">Johor</b> reveals Thailand and Singapore
+            as its top visitor origins, followed by other ASEAN nations,
+            Indonesia, and Vietnam. Together, the charts illustrate Malaysia's
+            key tourism hubs and their strongest regional travel links.
+          </h3>
+        </div>
+      </div>
+      <div class="section-label" id="insights">Regional Insights</div>
+      <div id="content">
+        <div class="section">
+          <div class="visualisation" id="hotel_info" style="width: 90vw"></div>
+          <div class="two-col-grid">
+            <div class="text-content-title">
+              <h2 class="align-self: left">
+                <span>
+                  <div class="number">5</div>
+                </span>
+                Where Malaysia Stays: <br />Hotel Guests and Occupancy
+              </h2>
+              <div class="divider" style="margin-right: 80px"></div>
+            </div>
+            <h3 class="paragraph">
+              Hotel occupancy across Malaysia paints a varied landscape.
+              <b>Kuala Lumpur</b> leads with strong gains in foreign guests,
+              boosting overall occupancy, while <b>Putrajaya</b> and
+              <b>Pulau Pinang</b> also see significant growth. Domestic demand
+              drives notable increases in Kedah and Johor, though some regions,
+              like Perak, Perlis, and Labuan, experience declines. Overall, the
+              figures reveal a recovering hospitality sector, propelled by
+              international travelers and selective domestic growth, yet uneven
+              across states.
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label" id="trends">Trends & Economics</div>
+      <div class="section">
+        <div class="visualisation" id="expenditure_by_category"></div>
+        <div class="two-col-grid">
+          <div class="text-content-title">
+            <h2 class="align-self: left">
+              <span>
+                <div class="number">6</div>
+              </span>
+              Expenditure Breakdown <br />
+              of Visitors
+            </h2>
+            <div class="divider" style="margin-right: 80px"></div>
+          </div>
+          <h3 class="paragraph">
+            Tourist spending reveals a clear hierarchy of priorities.
+            <b style="color: #64a159">Basic needs</b>
+            like accommodation and dining total over <u>$36,000</u>, while
+            <b style="color: #e48024">leisure</b>, led by shopping at nearly
+            <u>$40,000</u>, dominates discretionary spending.
+            <b style="color: #886cb9">Travel</b> costs reflect the backbone of
+            journeys, and smaller outlays on medical services, tours, fuel, and
+            other expenses hint at the unpredictable realities of life on the
+            road. The data paints travelers as pragmatic in necessities, eager
+            in pleasures, and mindful of the journey itself.
           </h3>
         </div>
       </div>
 
       <div class="section">
-        <div class="two-col-grid" style="grid-template-columns: 3fr 1fr">
+        <div class="two-col-grid" style="grid-template-columns: 1fr 2fr">
           <div>
             <h2
               style="
@@ -86,191 +250,81 @@
               "
             >
               <span>
-                <div class="number">2</div>
+                <div class="number">7</div>
               </span>
-              Air and Land Dominate Foreign <br />
-              Visitor Arrivals
+              From Exchange Rates to Arrivals: <br />
+              A 2-Year View
             </h2>
             <h3 class="paragraph">
-              The pie chart shows foreign tourist arrivals to Malaysia by mode
-              of transport in 2023 and 2024. <b>Air travel</b> remains
-              <b>dominant</b>, carrying nearly 11 million visitors in 2024, a
-              <u>40.3%</u> increase from the previous year—while
-              <b>land transport</b> accounts for over
-              <u>25 million</u> arrivals, growing 29.5%. Sea travel grew
-              moderately by 13% to around 1.3 million, whereas rail travel
-              declined slightly by 4.4%, representing just 1.5% of arrivals.
+              Foreign tourist arrivals in Malaysia proved surprisingly resilient
+              despite a weakening ringgit. Through much of 2023, the
+              <b style="color: #1515fa">USD/MYR</b> rate hovered between 4.5 and
+              4.8, while arrivals fluctuated, topping 3 million mid-year before
+              dipping early 2024. By August 2024,
+              <b style="color: #ee8a4f">visitor numbers</b>
+              <b>surged to 4.5 million</b>, suggesting that a
+              <u>softer currency may have boosted Malaysia's appeal</u>. The
+              steady climb in arrivals underscores the country's growing
+              magnetism for travelers and the robustness of its tourism sector.
             </h3>
           </div>
-          <div class="visualisation" id="mode_of_transport"></div>
+          <div class="visualisation" id="foreign_exchange_and_arrivals"></div>
         </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="visualisation" id="expenditure_by_category"></div>
-      <div class="two-col-grid">
-        <div class="text-content-title">
-          <h2 class="align-self: left">
-            <span>
-              <div class="number">3</div>
-            </span>
-            Expenditure Breakdown <br />
-            of Visitors
-          </h2>
-          <div class="divider" style="margin-right: 80px"></div>
-        </div>
-        <h3 class="paragraph">
-          Tourist spending reveals a clear hierarchy of priorities.
-          <b>Basic needs</b>
-          like accommodation and dining total over <u>$36,000</u>, while
-          <b>leisure</b>, led by shopping at nearly <u>$40,000</u>, dominates
-          discretionary spending. Travel costs reflect the backbone of journeys,
-          and smaller outlays on medical services, tours, fuel, and other
-          expenses hint at the unpredictable realities of life on the road. The
-          data paints travelers as pragmatic in necessities, eager in pleasures,
-          and mindful of the journey itself.
-        </h3>
-      </div>
-    </div>
-
-    <div id="content">
-      <div class="section">
-        <div class="visualisation" id="hotel_info" style="width: 90vw"></div>
-        <div class="two-col-grid">
-          <div class="text-content-title">
-            <h2 class="align-self: left">
-              <span>
-                <div class="number">4</div>
-              </span>
-              Where Malaysia Stays: <br />Hotel Guests and Occupancy
-            </h2>
-            <div class="divider" style="margin-right: 80px"></div>
-          </div>
-          <h3 class="paragraph">
-            Hotel occupancy across Malaysia paints a varied landscape.
-            <b>Kuala Lumpur</b> leads with strong gains in foreign guests,
-            boosting overall occupancy, while <b>Putrajaya</b> and
-            <b>Pulau Pinang</b> also see significant growth. Domestic demand
-            drives notable increases in Kedah and Johor, though some regions,
-            like Perak, Perlis, and Labuan, experience declines. Overall, the
-            figures reveal a recovering hospitality sector, propelled by
-            international travelers and selective domestic growth, yet uneven
-            across states.
-          </h3>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="two-col-grid" style="grid-template-columns: 3fr 1fr">
-        <div>
-          <h2
-            style="
-              margin-bottom: 20px;
-              display: flex;
-              flex-direction: row;
-              gap: 20px;
-              align-items: center;
-            "
-          >
-            <span>
-              <div class="number">5</div>
-            </span>
-            From Exchange Rates to Arrivals: <br />
-            A 2-Year View
-          </h2>
-          <h3 class="paragraph">
-            Foreign tourist arrivals in Malaysia proved surprisingly resilient
-            despite a weakening ringgit. Through much of 2023, the USD/MYR rate
-            hovered between 4.5 and 4.8, while arrivals fluctuated, topping 3
-            million mid-year before dipping early 2024. By August 2024, visitor
-            numbers <b>surged to 4.5 million</b>, suggesting that a
-            <u>softer currency may have boosted Malaysia's appeal</u>. The
-            steady climb in arrivals underscores the country's growing magnetism
-            for travelers and the robustness of its tourism sector.
-          </h3>
-        </div>
-        <div class="visualisation" id="foreign_exchange_and_arrivals"></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="visualisation" id="visitor_by_state"></div>
-      <div class="two-col-grid">
-        <div class="text-content-title">
-          <h2 class="align-self: left">
-            <span>
-              <div class="number">6</div>
-            </span>
-            Tourism Hotspots Across <br />
-            Malaysia In 2023
-          </h2>
-          <div class="divider" style="margin-right: 80px"></div>
-        </div>
-        <h3 class="paragraph">
-          The bubble chart shows foreign tourist arrivals across Malaysian
-          states, with darker shades indicating higher numbers.
-          <b>West Malaysia</b> leads, with <u>Johor</u>, <u>Kedah</u>,
-          <u>Kuala Lumpur</u>, and <u>Selangor</u> attracting the most visitors.
-          East Malaysia sees more moderate arrivals, mainly in Sabah and Sarawak
-          from China, Taiwan, South Korea, and Brunei. The map highlights the
-          concentration of tourism in the West and informs regional planning.
-        </h3>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="visualisation" id="point_of_entries"></div>
-      <div class="two-col-grid" style="margin-top: 3em">
-        <div class="text-content-title">
-          <h2 class="align-self: left">
-            <span>
-              <div class="number">7</div>
-            </span>
-            Tourist Entries by <br />
-            Entry Point State and Month
-          </h2>
-          <div class="divider" style="margin-right: 80px"></div>
-        </div>
-        <h3 class="paragraph">
-          The visualisation pairs a bar chart and a line chart to tell the story
-          of tourist arrivals in Malaysia from <b>January 2020</b> through
-          <b>October 2024</b>. The bar chart highlights <u>Johor</u> and
-          <u>Selangor</u> as the <b>busiest</b> entry points, far outpacing
-          other states. Meanwhile, the line chart traces arrivals over time,
-          revealing a steep drop at the outset of the period, followed by a
-          steady recovery and eventual increase, capturing the
-          <b>resilience and gradual rebound</b> of Malaysia's tourism sector.
-        </h3>
       </div>
     </div>
 
     <footer>
-      <p>© 2025 Justin Tan | FIT3179, Monash University</p>
+      <div class="footer-container">
+        <div class="footer-info">
+          <p>© 2025 <strong>Justin Tan</strong> | FIT3179, Monash University</p>
+          <p class="footer-note">
+            This website was developed for educational purposes as part of
+            FIT3179 Data Visualization.
+          </p>
+          <p class="footer-note">
+            Original source accessible at: <br />
+            https://github.com/coderJT/FIT3179A2_V2/
+          </p>
+        </div>
 
-      <p>
-        <strong>Sources obtained from:</strong><br /><br />
+        <div class="footer-sources">
+          <h3>Data Sources</h3>
+          <ul>
+            <li>
+              <strong>Tourism Malaysia</strong><br />
+              <a
+                href="https://data.tourism.gov.my/frontend/pdf/Tourist%20Profile%202023.pdf"
+                target="_blank"
+              >
+                Tourist Profile 2023 (PDF) </a
+              ><br />
+              <a
+                href="https://data.tourism.gov.my/frontend/pdf/New_Final_Malaysia%20Tourism%20Statistics%20in%20Brief%202024.pdf"
+                target="_blank"
+              >
+                Tourism Statistics in Brief 2024 (PDF)
+              </a>
+            </li>
 
-        <b>1. Tourism Malaysia:</b><br />
-        <a
-          href="https://data.tourism.gov.my/frontend/pdf/Tourist%20Profile%202023.pdf"
-          target="_blank"
-        >
-          Tourist Profile 2023 (PDF) </a
-        ><br />
-        <a
-          href="https://data.tourism.gov.my/frontend/pdf/New_Final_Malaysia%20Tourism%20Statistics%20in%20Brief%202024.pdf"
-          target="_blank"
-        >
-          Malaysia Tourism Statistics in Brief 2024 (PDF) </a
-        ><br /><br />
+            <li>
+              <strong>Bank Negara Malaysia</strong><br />
+              <a href="https://www.bnm.gov.my/exchange-rates" target="_blank">
+                Official Exchange Rates
+              </a>
+            </li>
 
-        <b>2. Bank Negara Malaysia:</b><br />
-        <a href="https://www.bnm.gov.my/exchange-rates" target="_blank">
-          Exchange Rates
-        </a>
-      </p>
+            <li>
+              <strong>Data.gov.my</strong><br />
+              <a
+                href="https://data.gov.my/data-catalogue/arrivals_soe"
+                target="_blank"
+              >
+                Monthly Arrivals by State of Entry, Nationality & Sex
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </footer>
 
     <!-- Scripts -->
@@ -309,6 +363,17 @@
       vegaEmbed("#point_of_entries", spec7, { actions: false })
         .then(function (result) {})
         .catch(console.error);
+
+      // Used for nav bar background change
+      window.addEventListener("scroll", function () {
+        const nav = document.querySelector("nav");
+
+        if (window.scrollY >= 100) {
+          nav.classList.add("solid");
+        } else {
+          nav.classList.remove("solid");
+        }
+      });
     </script>
   </body>
 </html>

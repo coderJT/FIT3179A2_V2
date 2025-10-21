@@ -11,10 +11,10 @@
   },
   "title": {
     "text": "Malaysia Hotel Occupancy by State",
-    "fontSize": 24,
-    "font": "Inter",
-    "fontWeight": "bold",
-    "offset": 15
+    "fontSize": 25,
+    "font": "Crimson Text",
+    "anchor": "middle",
+    "fontWeight": "bold"
   },
   "params": [
     {
@@ -38,13 +38,7 @@
     },
     {
       "name": "ColorScheme",
-      "value": "oranges",
-      "bind": {
-        "input": "select",
-        "options": ["oranges", "blues", "greens"],
-        "labels": ["Oranges", "Blues", "Greens"],
-        "name": "Color Scheme: "
-      }
+      "value": "oranges"
     },
     {
       "name": "SelectedYear",
@@ -58,7 +52,7 @@
     },
     {
       "name": "GuestType",
-      "value": "TOTAL",
+      "value": "FOREIGNER",
       "bind": {
         "input": "select",
         "options": ["DOMESTIC", "FOREIGNER", "TOTAL"],
@@ -99,14 +93,6 @@
             ]
           }
         },
-        {
-          "lookup": "properties.name",
-          "from": {
-            "data": { "url": "./data/hotel_occupancy_rate.csv" },
-            "key": "STATE",
-            "fields": ["2024(%)", "2023(%)", "DIFFERENCE"]
-          }
-        },
         { "calculate": "toNumber(datum['TOTAL 2024'])", "as": "TOTAL_2024" },
         { "calculate": "toNumber(datum['TOTAL 2023'])", "as": "TOTAL_2023" },
         {
@@ -143,7 +129,9 @@
           "legend": {
             "orient": "bottom-right",
             "direction": "horizontal",
-            "title": "Guest Count"
+            "title": "Guest Count (millions)",
+            "format": ".1f",
+            "labelExpr": "datum.label / 1e6 + 'M'"
           }
         },
         "tooltip": [
@@ -151,22 +139,8 @@
           {
             "field": "GUEST_SELECTED",
             "type": "quantitative",
-            "title": "Guests Count"
-          },
-          {
-            "field": "2024(%)",
-            "type": "quantitative",
-            "title": "Occupancy Rate 2024 (%)"
-          },
-          {
-            "field": "2023(%)",
-            "type": "quantitative",
-            "title": "Occupancy Rate 2023 (%)"
-          },
-          {
-            "field": "DIFFERENCE",
-            "type": "quantitative",
-            "title": "Occupancy Rate Change (%)"
+            "title": "Guests Count",
+            "format": ","
           }
         ]
       }
